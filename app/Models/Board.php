@@ -14,4 +14,9 @@ class Board extends Model
         'name',
         'tagline',
     ];
+
+    public function threads()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
