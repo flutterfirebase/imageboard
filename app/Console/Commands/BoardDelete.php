@@ -6,21 +6,21 @@ use App\Models\Board;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
-class CreateBoard extends Command
+class BoardDelete extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'board:create';
+    protected $signature = 'board:delete {board}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new board.';
+    protected $description = 'Delete an existing board.';
 
     protected Cache $cache;
 
@@ -43,13 +43,20 @@ class CreateBoard extends Command
      */
     public function handle()
     {
-        $board = Board::create([
-            'name' => $this->ask('Board name?'),
-            'url' => $this->ask('Board URL?'),
-            'tagline' => $this->ask('Board tagline?'),
-        ]);
+        $arg = $this->argument('board');
+        $board = Board::where('url', '=', $arg)->first();
+        if (! $board) {
+            $this->error("Board \"{$arg}\" does not exist.");
+            return 0;
+        }
 
-        $this->info("New board successfully created: {$board->name}");
+        if (! $this->confirm("Are you sure you want to delete the \"{$board->name}\" board?")) {
+            $this->error("Canceling board deletion.");
+            return 0;
+        }
+
+        $board->delete();
+        $this->info("Board successfully deleted.");
 
         $this->cache->forget('boards');
         $this->info('Cleared board cache.');
