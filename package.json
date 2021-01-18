@@ -10,9 +10,18 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@inertiajs/inertia": "^0.8.2",
+        "@inertiajs/inertia-vue": "^0.5.4",
+        "@inertiajs/progress": "^0.2.4",
+        "autoprefixer": "^10.2.1",
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "portal-vue": "^2.1.7",
+        "postcss": "^8.1.14",
+        "tailwindcss": "^2.0.2",
+        "vue": "^2.6.12",
+        "vue-loader": "^15.9.6",
+        "vue-template-compiler": "^2.6.12"
     }
 }
