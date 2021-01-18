@@ -2,11 +2,22 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Board;
+use Carbon\Carbon;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
+    protected Cache $cache;
+
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -37,7 +48,16 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
-            //
+            'boards' => $this->getBoards(),
         ]);
+    }
+
+    /**
+     * Get all boards, cached by an hour.
+     * @return Collection
+     */
+    protected function getBoards(): Collection
+    {
+        return $this->cache->remember('boards', Carbon::now()->addHour(), fn() => Board::orderBy('url')->get());
     }
 }

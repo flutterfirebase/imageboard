@@ -16,9 +16,9 @@
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <nav-link :href="route('index')" :active="route().current('index')">
-                                    Index
+                            <div class="hidden space-x-4 sm:-my-px sm:ml-10 sm:flex">
+                                <nav-link v-for="board in $page.props.boards" :key="board.id" :href="route('board', { board: board.url })" :active="route().current('board', { board: board.url })">
+                                    /{{ board.url }}/
                                 </nav-link>
                             </div>
                         </div>
