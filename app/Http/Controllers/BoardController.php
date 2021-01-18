@@ -20,8 +20,10 @@ class BoardController extends Controller
     public function index(string $board): Response|RedirectResponse
     {
         $board = Board::with(['threads' => function ($query) {
-            $query->whereNull('parent_id');
-        }])->where('url', '=', $board)->first();
+                $query->whereNull('parent_id');
+            }])
+            ->where('url', '=', $board)
+            ->first();
         
         if (! $board) {
             return redirect(route('index'));

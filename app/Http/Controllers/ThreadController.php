@@ -25,7 +25,9 @@ class ThreadController extends Controller
             redirect(route('index'));
         }
 
-        $thread = Post::with(['replies'])
+        $thread = Post::with(['replies' => function ($query) use ($board) {
+                $query->where('board_id', '=', $board->id);
+            }])
             ->where('board_id', '=', $board->id)
             ->where('post_id', '=', $post)
             ->where('parent_id', '=', null)
