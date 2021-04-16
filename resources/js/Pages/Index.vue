@@ -14,6 +14,13 @@ import AppLayout from "@/Layouts/AppLayout"
 export default {
     components: {
         AppLayout,
+    },
+
+    meta() {
+        return {
+            title: this.$page.props.appName,
+            titleTemplate: null,
+        };
     }
 }
 </script>

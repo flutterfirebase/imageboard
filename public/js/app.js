@@ -7,7 +7,7 @@
   \***********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-var e=__webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");function r(){return(r=Object.assign||function(e){for(var r=1;r<arguments.length;r++){var t=arguments[r];for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n])}return e}).apply(this,arguments)}function t(t){void 0===t&&(t={});var n=JSON.parse(JSON.stringify(t)),o=null,i=function(e){return e};return r({},n,{errors:{},hasErrors:!1,processing:!1,progress:null,wasSuccessful:!1,recentlySuccessful:!1,data:function(){var e=this;return Object.keys(t).reduce(function(r,t){return r[t]=e[t],r},{})},transform:function(e){return i=e,this},reset:function(){var e=[].slice.call(arguments);return Object.assign(this,0===e.length?n:Object.keys(n).filter(function(r){return e.includes(r)}).reduce(function(e,r){return e[r]=n[r],e},{})),this},clearErrors:function(){var e=this,t=[].slice.call(arguments);return this.errors=Object.keys(this.errors).reduce(function(n,o){var i;return r({},n,t.length>0&&!t.includes(o)?((i={})[o]=e.errors[o],i):{})},{}),this.hasErrors=Object.keys(this.errors).length>0,this},serialize:function(){return r({errors:this.errors},this.data())},unserialize:function(e){Object.assign(this,e),this.hasErrors=Object.keys(this.errors).length>0},submit:function(t,n,s){var a=this;void 0===s&&(s={});var u=i(this.data()),c=r({},s,{onBefore:function(e){if(a.wasSuccessful=!1,a.recentlySuccessful=!1,clearTimeout(o),s.onBefore)return s.onBefore(e)},onStart:function(e){if(a.processing=!0,s.onStart)return s.onStart(e)},onProgress:function(e){if(a.progress=e,s.onProgress)return s.onProgress(e)},onSuccess:function(e){if(a.clearErrors(),a.wasSuccessful=!0,a.recentlySuccessful=!0,o=setTimeout(function(){return a.recentlySuccessful=!1},2e3),s.onSuccess)return s.onSuccess(e)},onError:function(e){if(a.errors=e,a.hasErrors=!0,s.onError)return s.onError(e)},onFinish:function(){if(a.processing=!1,a.progress=null,s.onFinish)return s.onFinish()}});"delete"===t?e.Inertia.delete(n,r({},c,{data:u})):e.Inertia[t](n,u,c)},post:function(e,r){this.submit("post",e,r)},put:function(e,r){this.submit("put",e,r)},patch:function(e,r){this.submit("patch",e,r)},delete:function(e,r){this.submit("delete",e,r)}})}var n={functional:!0,props:{as:{type:String,default:"a"},data:{type:Object,default:function(){return{}}},href:{type:String,required:!0},method:{type:String,default:"get"},replace:{type:Boolean,default:!1},preserveScroll:{type:Boolean,default:!1},preserveState:{type:Boolean,default:null},only:{type:Array,default:function(){return[]}},headers:{type:Object,default:function(){return{}}}},render:function(t,n){var o=n.props,i=n.data,s=n.children;i.on=r({click:function(){return{}},cancelToken:function(){return{}},start:function(){return{}},progress:function(){return{}},finish:function(){return{}},cancel:function(){return{}},success:function(){return{}},error:function(){return{}}},i.on||{});var a=o.as.toLowerCase(),u=o.method.toLowerCase(),c=e.mergeDataIntoQueryString(u,e.hrefToUrl(o.href),o.data),p=c[0],l=c[1];return"a"===a&&"get"!==u&&console.warn('Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="'+p.href+'" method="'+u+'" as="button">...</inertia-link>'),t(o.as,r({},i,{attrs:r({},i.attrs,"a"===a?{href:p.href}:{}),on:r({},i.on,{click:function(r){var t;i.on.click(r),e.shouldIntercept(r)&&(r.preventDefault(),e.Inertia.visit(p.href,{data:l,method:u,replace:o.replace,preserveScroll:o.preserveScroll,preserveState:null!=(t=o.preserveState)?t:"get"!==u,only:o.only,headers:o.headers,onCancelToken:i.on.cancelToken,onBefore:i.on.before,onStart:i.on.start,onProgress:i.on.progress,onFinish:i.on.finish,onCancel:i.on.cancel,onSuccess:i.on.success,onError:i.on.error}))}})}),s)}},o={created:function(){var t=this;if(this.$options.remember){Array.isArray(this.$options.remember)&&(this.$options.remember={data:this.$options.remember}),"string"==typeof this.$options.remember&&(this.$options.remember={data:[this.$options.remember]}),"string"==typeof this.$options.remember.data&&(this.$options.remember={data:[this.$options.remember.data]});var n=this.$options.remember.key instanceof Function?this.$options.remember.key.call(this):this.$options.remember.key,o=e.Inertia.restore(n);this.$options.remember.data.forEach(function(i){void 0!==t[i]&&void 0!==o&&void 0!==o[i]&&("function"==typeof t[i].serialize&&"function"==typeof t[i].unserialize?t[i].unserialize(o[i]):t[i]=o[i]),t.$watch(i,function(){e.Inertia.remember(t.$options.remember.data.reduce(function(e,n){var o;return r({},e,((o={})[n]="function"==typeof t[n].serialize&&"function"==typeof t[n].unserialize?t[n].serialize():t[n],o))},{}),n)},{immediate:!0,deep:!0})})}}},i={},s={name:"Inertia",props:{initialPage:{type:Object,required:!0},resolveComponent:{type:Function,required:!0},resolveErrors:{type:Function,required:!1},transformProps:{type:Function,required:!1}},data:function(){return{component:null,page:{},key:null}},created:function(){var r=this;i=this,e.Inertia.init({initialPage:this.initialPage,resolveComponent:this.resolveComponent,resolveErrors:this.resolveErrors,transformProps:this.transformProps,swapComponent:function(e){var t=e.component,n=e.page,o=e.preserveState;try{return r.component=t,r.page=n,r.key=o?r.key:Date.now(),Promise.resolve()}catch(e){return Promise.reject(e)}}})},render:function(e){if(this.component){var r=e(this.component,{key:this.key,props:this.page.props,scopedSlots:this.$scopedSlots});return this.component.layout?"function"==typeof this.component.layout?this.component.layout(e,r):Array.isArray(this.component.layout)?this.component.layout.concat(r).reverse().reduce(function(r,t){return e(t,[r])}):e(this.component.layout,[r]):r}},install:function(e){console.warn('Registering the Inertia Vue plugin via the "app" component has been deprecated. Use the new "plugin" named export instead.\n\nimport { plugin } from \'@inertiajs/inertia-vue\'\n\nVue.use(plugin)'),a.install(e)}},a={install:function(r){e.Inertia.form=t,Object.defineProperty(r.prototype,"$inertia",{get:function(){return e.Inertia}}),Object.defineProperty(r.prototype,"$page",{get:function(){return i.page}}),r.mixin(o),r.component("InertiaLink",n)}};exports.App=s,exports.InertiaApp=s,exports.InertiaLink=n,exports.Link=n,exports.app=s,exports.link=n,exports.plugin=a;
+function e(e){return e&&"object"==typeof e&&"default"in e?e.default:e}var r=e(__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")),t=e(__webpack_require__(/*! lodash.clonedeep */ "./node_modules/lodash.clonedeep/index.js")),n=__webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");function o(){return(o=Object.assign||function(e){for(var r=1;r<arguments.length;r++){var t=arguments[r];for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n])}return e}).apply(this,arguments)}function i(){var e=[].slice.call(arguments),i="string"==typeof e[0]?e[0]:null,s=("string"==typeof e[0]?e[1]:e[0])||{},a=t(s),c=i?n.Inertia.restore(i):null,u=null,l=null,p=function(e){return e},f=r.observable(o({},c?c.data:s,{errors:c?c.errors:{},hasErrors:!1,processing:!1,progress:null,wasSuccessful:!1,recentlySuccessful:!1,data:function(){var e=this;return Object.keys(s).reduce(function(r,t){return r[t]=e[t],r},{})},transform:function(e){return p=e,this},reset:function(){var e=[].slice.call(arguments),r=t(a);return Object.assign(this,0===e.length?r:Object.keys(r).filter(function(r){return e.includes(r)}).reduce(function(e,t){return e[t]=r[t],e},{})),this},clearErrors:function(){var e=this,r=[].slice.call(arguments);return this.errors=Object.keys(this.errors).reduce(function(t,n){var i;return o({},t,r.length>0&&!r.includes(n)?((i={})[n]=e.errors[n],i):{})},{}),this.hasErrors=Object.keys(this.errors).length>0,this},submit:function(e,r,t){var i=this;void 0===t&&(t={});var s=p(this.data()),a=o({},t,{onCancelToken:function(e){if(u=e,t.cancelToken)return t.cancelToken(e)},onBefore:function(e){if(i.wasSuccessful=!1,i.recentlySuccessful=!1,clearTimeout(l),t.onBefore)return t.onBefore(e)},onStart:function(e){if(i.processing=!0,t.onStart)return t.onStart(e)},onProgress:function(e){if(i.progress=e,t.onProgress)return t.onProgress(e)},onSuccess:function(e){if(i.clearErrors(),i.wasSuccessful=!0,i.recentlySuccessful=!0,l=setTimeout(function(){return i.recentlySuccessful=!1},2e3),t.onSuccess)return t.onSuccess(e)},onError:function(e){if(i.errors=e,i.hasErrors=!0,t.onError)return t.onError(e)},onFinish:function(){if(u=null,i.processing=!1,i.progress=null,t.onFinish)return t.onFinish()}});"delete"===e?n.Inertia.delete(r,o({},a,{data:s})):n.Inertia[e](r,s,a)},get:function(e,r){this.submit("get",e,r)},post:function(e,r){this.submit("post",e,r)},put:function(e,r){this.submit("put",e,r)},patch:function(e,r){this.submit("patch",e,r)},delete:function(e,r){this.submit("delete",e,r)},cancel:function(){u&&u.cancel()},__rememberable:null===i,__remember:function(){return{data:this.data(),errors:this.errors}},__restore:function(e){Object.assign(this,e.data),Object.assign(this.errors,e.errors),this.hasErrors=Object.keys(this.errors).length>0}}));return i&&new r({created:function(){this.$watch(function(){return f},function(e){n.Inertia.remember(e.__remember(),i)},{immediate:!0,deep:!0})}}),f}var s={functional:!0,props:{as:{type:String,default:"a"},data:{type:Object,default:function(){return{}}},href:{type:String,required:!0},method:{type:String,default:"get"},replace:{type:Boolean,default:!1},preserveScroll:{type:Boolean,default:!1},preserveState:{type:Boolean,default:null},only:{type:Array,default:function(){return[]}},headers:{type:Object,default:function(){return{}}}},render:function(e,r){var t=r.props,i=r.data,s=r.children;i.on=o({click:function(){return{}},cancelToken:function(){return{}},start:function(){return{}},progress:function(){return{}},finish:function(){return{}},cancel:function(){return{}},success:function(){return{}},error:function(){return{}}},i.on||{});var a=t.as.toLowerCase(),c=t.method.toLowerCase(),u=n.mergeDataIntoQueryString(c,n.hrefToUrl(t.href),t.data),l=u[0],p=u[1];return"a"===a&&"get"!==c&&console.warn('Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="'+l.href+'" method="'+c+'" as="button">...</inertia-link>'),e(t.as,o({},i,{attrs:o({},i.attrs,"a"===a?{href:l.href}:{}),on:o({},i.on,{click:function(e){var r;i.on.click(e),n.shouldIntercept(e)&&(e.preventDefault(),n.Inertia.visit(l.href,{data:p,method:c,replace:t.replace,preserveScroll:t.preserveScroll,preserveState:null!=(r=t.preserveState)?r:"get"!==c,only:t.only,headers:t.headers,onCancelToken:i.on.cancelToken,onBefore:i.on.before,onStart:i.on.start,onProgress:i.on.progress,onFinish:i.on.finish,onCancel:i.on.cancel,onSuccess:i.on.success,onError:i.on.error}))}})}),s)}},a={created:function(){var e=this;if(this.$options.remember){Array.isArray(this.$options.remember)&&(this.$options.remember={data:this.$options.remember}),"string"==typeof this.$options.remember&&(this.$options.remember={data:[this.$options.remember]}),"string"==typeof this.$options.remember.data&&(this.$options.remember={data:[this.$options.remember.data]});var r=this.$options.remember.key instanceof Function?this.$options.remember.key.call(this):this.$options.remember.key,t=n.Inertia.restore(r),i=this.$options.remember.data.filter(function(r){return!(null!==e[r]&&"object"==typeof e[r]&&!1===e[r].__rememberable)}),s=function(r){return null!==e[r]&&"object"==typeof e[r]&&"function"==typeof e[r].__remember&&"function"==typeof e[r].__restore};i.forEach(function(a){void 0!==e[a]&&void 0!==t&&void 0!==t[a]&&(s(a)?e[a].__restore(t[a]):e[a]=t[a]),e.$watch(a,function(){n.Inertia.remember(i.reduce(function(r,t){var n;return o({},r,((n={})[t]=s(t)?e[t].__remember():e[t],n))},{}),r)},{immediate:!0,deep:!0})})}}},c={},u={name:"Inertia",props:{initialPage:{type:Object,required:!0},resolveComponent:{type:Function,required:!0},resolveErrors:{type:Function,required:!1},transformProps:{type:Function,required:!1}},data:function(){return{component:null,page:{},key:null}},created:function(){var e=this;c=this,n.Inertia.init({initialPage:this.initialPage,resolveComponent:this.resolveComponent,resolveErrors:this.resolveErrors,transformProps:this.transformProps,swapComponent:function(r){var t=r.component,n=r.page,o=r.preserveState;try{return e.component=t,e.page=n,e.key=o?e.key:Date.now(),Promise.resolve()}catch(e){return Promise.reject(e)}}})},render:function(e){if(this.component){var r=e(this.component,{key:this.key,props:this.page.props,scopedSlots:this.$scopedSlots});return this.component.layout?"function"==typeof this.component.layout?this.component.layout(e,r):Array.isArray(this.component.layout)?this.component.layout.concat(r).reverse().reduce(function(r,t){return e(t,[r])}):e(this.component.layout,[r]):r}},install:function(e){console.warn('Registering the Inertia Vue plugin via the "app" component has been deprecated. Use the new "plugin" named export instead.\n\nimport { plugin } from \'@inertiajs/inertia-vue\'\n\nVue.use(plugin)'),l.install(e)}},l={install:function(e){n.Inertia.form=i,Object.defineProperty(e.prototype,"$inertia",{get:function(){return n.Inertia}}),Object.defineProperty(e.prototype,"$page",{get:function(){return c.page}}),e.mixin(a),e.component("InertiaLink",s)}};exports.App=u,exports.InertiaApp=u,exports.InertiaLink=s,exports.Link=s,exports.app=u,exports.link=s,exports.plugin=l;
 //# sourceMappingURL=index.js.map
 
 
@@ -19,7 +19,7 @@ var e=__webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/i
   \*******************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-function e(e){return e&&"object"==typeof e&&"default"in e?e.default:e}var t=e(__webpack_require__(/*! axios */ "./node_modules/axios/index.js")),n=e(__webpack_require__(/*! qs */ "./node_modules/@inertiajs/inertia/node_modules/qs/lib/index.js")),i=e(__webpack_require__(/*! deepmerge */ "./node_modules/@inertiajs/inertia/node_modules/deepmerge/dist/cjs.js"));function o(){return(o=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var i in n)Object.prototype.hasOwnProperty.call(n,i)&&(e[i]=n[i])}return e}).apply(this,arguments)}var r={modal:null,listener:null,show:function(e){var t=this;"object"==typeof e&&(e="All Inertia requests must receive a valid Inertia response, however a plain JSON response was received.<hr>"+JSON.stringify(e));var n=document.createElement("html");n.innerHTML=e,n.querySelectorAll("a").forEach(function(e){return e.setAttribute("target","_top")}),this.modal=document.createElement("div"),this.modal.style.position="fixed",this.modal.style.width="100vw",this.modal.style.height="100vh",this.modal.style.padding="50px",this.modal.style.boxSizing="border-box",this.modal.style.backgroundColor="rgba(0, 0, 0, .6)",this.modal.style.zIndex=2e5,this.modal.addEventListener("click",function(){return t.hide()});var i=document.createElement("iframe");i.style.backgroundColor="white",i.style.borderRadius="5px",i.style.width="100%",i.style.height="100%",this.modal.appendChild(i),document.body.prepend(this.modal),document.body.style.overflow="hidden",i.contentWindow.document.open(),i.contentWindow.document.write(n.outerHTML),i.contentWindow.document.close(),this.listener=this.hideOnEscape.bind(this),document.addEventListener("keydown",this.listener)},hide:function(){this.modal.outerHTML="",this.modal=null,document.body.style.overflow="visible",document.removeEventListener("keydown",this.listener)},hideOnEscape:function(e){27===e.keyCode&&this.hide()}};function s(e,t){return document.dispatchEvent(new CustomEvent("inertia:"+e,t))}function a(e){return s("finish",{detail:{visit:e}})}function l(e){return s("navigate",{detail:{page:e}})}function c(e){return new URL(e,window.location)}function d(e,t,o){return"get"===e&&Object.keys(o).length&&(t.search=n.stringify(i(n.parse(t.search,{ignoreQueryPrefix:!0}),o),{encodeValuesOnly:!0,arrayFormat:"brackets"}),o={}),[t,o]}function u(e){return(e=new URL(e.href)).hash="",e}function h(e,t,n){if(void 0===t&&(t=new FormData),void 0===n&&(n=null),null===e||"undefined"===e||0===e.length)return t.append(n,e);for(var i in e)Object.prototype.hasOwnProperty.call(e,i)&&v(t,p(n,i),e[i]);return t}function p(e,t){return e?e+"["+t+"]":t}function v(e,t,n){return n instanceof Date?e.append(t,n.toISOString()):n instanceof File?e.append(t,n,n.name):"boolean"==typeof n?e.append(t,n?"1":"0"):null===n?e.append(t,""):"object"!=typeof n?e.append(t,n):void h(n,e,t)}exports.Inertia={resolveComponent:null,resolveErrors:function(e){return e.props.errors||{}},swapComponent:null,transformProps:function(e){return e},activeVisit:null,visitId:null,page:null,init:function(e){var t=e.initialPage,n=e.resolveErrors,i=e.swapComponent,o=e.transformProps;this.resolveComponent=e.resolveComponent,this.resolveErrors=n||this.resolveErrors,this.swapComponent=i,this.transformProps=o||this.transformProps,this.handleInitialPageVisit(t),this.setupEventListeners()},handleInitialPageVisit:function(e){this.isBackForwardVisit()?this.handleBackForwardVisit(e):this.isLocationVisit()?this.handleLocationVisit(e):(e.url+=window.location.hash,this.setPage(e)),l(e)},setupEventListeners:function(){var e,t;window.addEventListener("popstate",this.handlePopstateEvent.bind(this)),document.addEventListener("scroll",(e=this.handleScrollEvent.bind(this),t=null,function(){var n=arguments,i=this;clearTimeout(t),t=setTimeout(function(){return e.apply(i,n)},100)}),!0)},scrollRegions:function(){return document.querySelectorAll("[scroll-region]")},handleScrollEvent:function(e){"function"==typeof e.target.hasAttribute&&e.target.hasAttribute("scroll-region")&&this.saveScrollPositions()},saveScrollPositions:function(){this.replaceState(o({},this.page,{scrollRegions:Array.prototype.slice.call(this.scrollRegions()).map(function(e){return{top:e.scrollTop,left:e.scrollLeft}})}))},resetScrollPositions:function(){var e;document.documentElement.scrollTop=0,document.documentElement.scrollLeft=0,this.scrollRegions().forEach(function(e){e.scrollTop=0,e.scrollLeft=0}),this.saveScrollPositions(),window.location.hash&&(null==(e=document.getElementById(window.location.hash.slice(1)))||e.scrollIntoView())},restoreScrollPositions:function(){var e=this;this.page.scrollRegions&&this.scrollRegions().forEach(function(t,n){t.scrollTop=e.page.scrollRegions[n].top,t.scrollLeft=e.page.scrollRegions[n].left})},isBackForwardVisit:function(){return window.history.state&&window.performance&&window.performance.getEntriesByType("navigation").length&&"back_forward"===window.performance.getEntriesByType("navigation")[0].type},handleBackForwardVisit:function(e){var t=this;window.history.state.version=e.version,this.setPage(window.history.state,{preserveScroll:!0}).then(function(){t.restoreScrollPositions()})},locationVisit:function(e,t){try{window.sessionStorage.setItem("inertiaLocationVisit",JSON.stringify({preserveScroll:t})),window.location.href=e.href,u(window.location).href===u(e).href&&window.location.reload()}catch(e){return!1}},isLocationVisit:function(){try{return null!==window.sessionStorage.getItem("inertiaLocationVisit")}catch(e){return!1}},handleLocationVisit:function(e){var t,n,i,o,r=this,s=JSON.parse(window.sessionStorage.getItem("inertiaLocationVisit"));window.sessionStorage.removeItem("inertiaLocationVisit"),e.url+=window.location.hash,e.rememberedState=null!=(t=null==(n=window.history.state)?void 0:n.rememberedState)?t:{},e.scrollRegions=null!=(i=null==(o=window.history.state)?void 0:o.scrollRegions)?i:[],this.setPage(e,{preserveScroll:s.preserveScroll}).then(function(){s.preserveScroll&&r.restoreScrollPositions()})},isLocationVisitResponse:function(e){return e&&409===e.status&&e.headers["x-inertia-location"]},isInertiaResponse:function(e){return null==e?void 0:e.headers["x-inertia"]},createVisitId:function(){return this.visitId={},this.visitId},cancelVisit:function(e,t){var n=t.cancelled,i=void 0!==n&&n,o=t.interrupted,r=void 0!==o&&o;!e||e.completed||e.cancelled||e.interrupted||(e.cancelToken.cancel(),e.onCancel(),e.completed=!1,e.cancelled=i,e.interrupted=r,a(e),e.onFinish())},finishVisit:function(e){e.cancelled||e.interrupted||(e.completed=!0,e.cancelled=!1,e.interrupted=!1,a(e),e.onFinish())},visit:function(e,n){var i=this,a=void 0===n?{}:n,l=a.method,p=void 0===l?"get":l,v=a.data,f=void 0===v?{}:v,m=a.replace,g=void 0!==m&&m,w=a.preserveScroll,y=void 0!==w&&w,S=a.preserveState,b=void 0!==S&&S,P=a.only,I=void 0===P?[]:P,E=a.headers,V=void 0===E?{}:E,L=a.errorBag,C=void 0===L?null:L,k=a.onCancelToken,x=void 0===k?function(){return{}}:k,R=a.onBefore,T=void 0===R?function(){return{}}:R,O=a.onStart,j=void 0===O?function(){return{}}:O,F=a.onProgress,B=void 0===F?function(){return{}}:F,q=a.onFinish,A=void 0===q?function(){return{}}:q,N=a.onCancel,X=void 0===N?function(){return{}}:N,J=a.onSuccess,D=void 0===J?function(){return{}}:J,H=a.onError,M=void 0===H?function(){return{}}:H,W=d(p=p.toLowerCase(),c(e),f);e=W[0];var K=function e(t){return t instanceof File||t instanceof FileList||"object"==typeof t&&null!==t&&void 0!==Object.values(t).find(function(t){return e(t)})}(f=W[1]);"get"!==p&&K&&(f=h(f));var U={url:e,method:p,data:f,replace:g,preserveScroll:y,preserveState:b,only:I,headers:V,errorBag:C,onCancelToken:x,onBefore:T,onStart:j,onProgress:B,onFinish:A,onCancel:X,onSuccess:D,onError:M};if(!1!==T(U)&&function(e){return s("before",{cancelable:!0,detail:{visit:e}})}(U)){this.cancelVisit(this.activeVisit,{interrupted:!0}),this.saveScrollPositions();var z=this.createVisitId();return this.activeVisit=U,this.activeVisit.cancelToken=t.CancelToken.source(),x({cancel:function(){return i.cancelVisit(i.activeVisit,{cancelled:!0})}}),function(e){s("start",{detail:{visit:e}})}(U),j(U),new Proxy(t({method:p,url:u(e).href,data:"get"===p?{}:f,params:"get"===p?f:{},cancelToken:this.activeVisit.cancelToken.token,headers:o({},V,{Accept:"text/html, application/xhtml+xml","X-Requested-With":"XMLHttpRequest","X-Inertia":!0},I.length?{"X-Inertia-Partial-Component":this.page.component,"X-Inertia-Partial-Data":I.join(",")}:{},C?{"X-Inertia-Error-Bag":C}:{},this.page.version?{"X-Inertia-Version":this.page.version}:{}),onUploadProgress:function(e){K&&(e.percentage=Math.round(e.loaded/e.total*100),function(e){s("progress",{detail:{progress:e}})}(e),B(e))}}).then(function(t){if(!i.isInertiaResponse(t))return Promise.reject({response:t});I.length&&t.data.component===i.page.component&&(t.data.props=o({},i.page.props,t.data.props));var n=c(t.data.url);return e.hash&&!n.hash&&u(e).href===n.href&&(n.hash=e.hash,t.data.url=n.href),i.setPage(t.data,{visitId:z,replace:g,preserveScroll:y,preserveState:b})}).then(function(){var e=i.resolveErrors(i.page);return Object.keys(e).length>0?(function(e){s("error",{detail:{errors:e}})}(e[C]||e),M(e[C]||e)):(s("success",{detail:{page:i.page}}),D(i.page))}).catch(function(t){if(i.isInertiaResponse(t.response))return i.setPage(t.response.data,{visitId:z});if(i.isLocationVisitResponse(t.response)){var n=c(t.response.headers["x-inertia-location"]);e.hash&&!n.hash&&u(e).href===n.href&&(n.hash=e.hash),i.locationVisit(n,y)}else{if(!t.response)return Promise.reject(t);s("invalid",{cancelable:!0,detail:{response:t.response}})&&r.show(t.response.data)}}).then(function(){i.finishVisit(U)}).catch(function(e){if(!t.isCancel(e)){var n=s("exception",{cancelable:!0,detail:{exception:e}});if(i.finishVisit(U),n)return Promise.reject(e)}}),{get:function(e,t){return["then","catch","finally"].includes(t)&&console.warn("Inertia.js visit promises have been deprecated and will be removed in a future release. Please use the new visit event callbacks instead.\n\nLearn more at https://inertiajs.com/manual-visits#promise-deprecation"),"function"==typeof e[t]?e[t].bind(e):e[t]}})}},setPage:function(e,t){var n=this,i=void 0===t?{}:t,o=i.visitId,r=void 0===o?this.createVisitId():o,s=i.replace,a=void 0!==s&&s,d=i.preserveScroll,u=void 0!==d&&d,h=i.preserveState,p=void 0!==h&&h;return Promise.resolve(this.resolveComponent(e.component)).then(function(t){if(r===n.visitId){e.scrollRegions=e.scrollRegions||[],e.rememberedState=e.rememberedState||{},p="function"==typeof p?p(e):p,u="function"==typeof u?u(e):u,(a=a||c(e.url).href===window.location.href)?n.replaceState(e):n.pushState(e);var i=JSON.parse(JSON.stringify(e));i.props=n.transformProps(i.props),n.swapComponent({component:t,page:i,preserveState:p}).then(function(){u||n.resetScrollPositions(),a||l(e)})}})},pushState:function(e){this.page=e,window.history.pushState(e,"",e.url)},replaceState:function(e){this.page=e,window.history.replaceState(e,"",e.url)},handlePopstateEvent:function(e){var t=this;if(null!==e.state){var n=e.state,i=this.createVisitId();return Promise.resolve(this.resolveComponent(n.component)).then(function(e){i===t.visitId&&(t.page=n,t.swapComponent({component:e,page:n,preserveState:!1}).then(function(){t.restoreScrollPositions(),l(n)}))})}var r=c(this.page.url);r.hash=window.location.hash,this.replaceState(o({},this.page,{url:r.href})),this.resetScrollPositions()},get:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,o({},n,{method:"get",data:t}))},reload:function(e){return void 0===e&&(e={}),this.visit(window.location.href,o({},e,{preserveScroll:!0,preserveState:!0}))},replace:function(e,t){var n;return void 0===t&&(t={}),console.warn("Inertia.replace() has been deprecated and will be removed in a future release. Please use Inertia."+(null!=(n=t.method)?n:"get")+"() instead."),this.visit(e,o({preserveState:!0},t,{replace:!0}))},post:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,o({preserveState:!0},n,{method:"post",data:t}))},put:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,o({preserveState:!0},n,{method:"put",data:t}))},patch:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,o({preserveState:!0},n,{method:"patch",data:t}))},delete:function(e,t){return void 0===t&&(t={}),this.visit(e,o({preserveState:!0},t,{method:"delete"}))},remember:function(e,t){var n;void 0===t&&(t="default"),this.replaceState(o({},this.page,{rememberedState:o({},this.page.rememberedState,(n={},n[t]=e,n))}))},restore:function(e){var t,n;return void 0===e&&(e="default"),null==(t=window.history.state)||null==(n=t.rememberedState)?void 0:n[e]},on:function(e,t){var n=function(e){var n=t(e);e.cancelable&&!e.defaultPrevented&&!1===n&&e.preventDefault()};return document.addEventListener("inertia:"+e,n),function(){return document.removeEventListener("inertia:"+e,n)}}},exports.hrefToUrl=c,exports.mergeDataIntoQueryString=d,exports.shouldIntercept=function(e){var t="a"===e.currentTarget.tagName.toLowerCase();return!(e.target&&e.target.isContentEditable||e.defaultPrevented||t&&e.which>1||t&&e.altKey||t&&e.ctrlKey||t&&e.metaKey||t&&e.shiftKey)},exports.urlWithoutHash=u;
+function e(e){return e&&"object"==typeof e&&"default"in e?e.default:e}var t=e(__webpack_require__(/*! axios */ "./node_modules/axios/index.js")),n=e(__webpack_require__(/*! qs */ "./node_modules/@inertiajs/inertia/node_modules/qs/lib/index.js")),i=e(__webpack_require__(/*! deepmerge */ "./node_modules/@inertiajs/inertia/node_modules/deepmerge/dist/cjs.js"));function r(){return(r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var i in n)Object.prototype.hasOwnProperty.call(n,i)&&(e[i]=n[i])}return e}).apply(this,arguments)}var o={modal:null,listener:null,show:function(e){var t=this;"object"==typeof e&&(e="All Inertia requests must receive a valid Inertia response, however a plain JSON response was received.<hr>"+JSON.stringify(e));var n=document.createElement("html");n.innerHTML=e,n.querySelectorAll("a").forEach(function(e){return e.setAttribute("target","_top")}),this.modal=document.createElement("div"),this.modal.style.position="fixed",this.modal.style.width="100vw",this.modal.style.height="100vh",this.modal.style.padding="50px",this.modal.style.boxSizing="border-box",this.modal.style.backgroundColor="rgba(0, 0, 0, .6)",this.modal.style.zIndex=2e5,this.modal.addEventListener("click",function(){return t.hide()});var i=document.createElement("iframe");i.style.backgroundColor="white",i.style.borderRadius="5px",i.style.width="100%",i.style.height="100%",this.modal.appendChild(i),document.body.prepend(this.modal),document.body.style.overflow="hidden",i.contentWindow.document.open(),i.contentWindow.document.write(n.outerHTML),i.contentWindow.document.close(),this.listener=this.hideOnEscape.bind(this),document.addEventListener("keydown",this.listener)},hide:function(){this.modal.outerHTML="",this.modal=null,document.body.style.overflow="visible",document.removeEventListener("keydown",this.listener)},hideOnEscape:function(e){27===e.keyCode&&this.hide()}};function s(e,t){return document.dispatchEvent(new CustomEvent("inertia:"+e,t))}function a(e){return s("finish",{detail:{visit:e}})}function l(e){return s("navigate",{detail:{page:e}})}function c(e){return new URL(e,window.location)}function d(e,t,r){return"get"===e&&Object.keys(r).length&&(t.search=n.stringify(i(n.parse(t.search,{ignoreQueryPrefix:!0}),r),{encodeValuesOnly:!0,arrayFormat:"brackets"}),r={}),[t,r]}function u(e){return(e=new URL(e.href)).hash="",e}function h(e,t,n){if(void 0===t&&(t=new FormData),void 0===n&&(n=null),null===e||"undefined"===e||0===e.length)return t.append(n,e);for(var i in e)Object.prototype.hasOwnProperty.call(e,i)&&v(t,p(n,i),e[i]);return t}function p(e,t){return e?e+"["+t+"]":t}function v(e,t,n){return n instanceof Date?e.append(t,n.toISOString()):n instanceof File?e.append(t,n,n.name):n instanceof Blob?e.append(t,n):"boolean"==typeof n?e.append(t,n?"1":"0"):null===n?e.append(t,""):"object"!=typeof n?e.append(t,n):void h(n,e,t)}exports.Inertia={resolveComponent:null,resolveErrors:function(e){return e.props.errors||{}},swapComponent:null,transformProps:function(e){return e},activeVisit:null,visitId:null,page:null,init:function(e){var t=e.initialPage,n=e.resolveErrors,i=e.swapComponent,r=e.transformProps;this.resolveComponent=e.resolveComponent,this.resolveErrors=n||this.resolveErrors,this.swapComponent=i,this.transformProps=r||this.transformProps,this.handleInitialPageVisit(t),this.setupEventListeners()},handleInitialPageVisit:function(e){this.isBackForwardVisit()?this.handleBackForwardVisit(e):this.isLocationVisit()?this.handleLocationVisit(e):(e.url+=window.location.hash,this.setPage(e)),l(e)},setupEventListeners:function(){var e,t;window.addEventListener("popstate",this.handlePopstateEvent.bind(this)),document.addEventListener("scroll",(e=this.handleScrollEvent.bind(this),t=null,function(){var n=arguments,i=this;clearTimeout(t),t=setTimeout(function(){return e.apply(i,n)},100)}),!0)},scrollRegions:function(){return document.querySelectorAll("[scroll-region]")},handleScrollEvent:function(e){"function"==typeof e.target.hasAttribute&&e.target.hasAttribute("scroll-region")&&this.saveScrollPositions()},saveScrollPositions:function(){this.replaceState(r({},this.page,{scrollRegions:Array.prototype.slice.call(this.scrollRegions()).map(function(e){return{top:e.scrollTop,left:e.scrollLeft}})}))},resetScrollPositions:function(){var e;document.documentElement.scrollTop=0,document.documentElement.scrollLeft=0,this.scrollRegions().forEach(function(e){e.scrollTop=0,e.scrollLeft=0}),this.saveScrollPositions(),window.location.hash&&(null==(e=document.getElementById(window.location.hash.slice(1)))||e.scrollIntoView())},restoreScrollPositions:function(){var e=this;this.page.scrollRegions&&this.scrollRegions().forEach(function(t,n){t.scrollTop=e.page.scrollRegions[n].top,t.scrollLeft=e.page.scrollRegions[n].left})},isBackForwardVisit:function(){return window.history.state&&window.performance&&window.performance.getEntriesByType("navigation").length&&"back_forward"===window.performance.getEntriesByType("navigation")[0].type},handleBackForwardVisit:function(e){var t=this;window.history.state.version=e.version,this.setPage(window.history.state,{preserveScroll:!0}).then(function(){t.restoreScrollPositions()})},locationVisit:function(e,t){try{window.sessionStorage.setItem("inertiaLocationVisit",JSON.stringify({preserveScroll:t})),window.location.href=e.href,u(window.location).href===u(e).href&&window.location.reload()}catch(e){return!1}},isLocationVisit:function(){try{return null!==window.sessionStorage.getItem("inertiaLocationVisit")}catch(e){return!1}},handleLocationVisit:function(e){var t,n,i,r,o=this,s=JSON.parse(window.sessionStorage.getItem("inertiaLocationVisit"));window.sessionStorage.removeItem("inertiaLocationVisit"),e.url+=window.location.hash,e.rememberedState=null!=(t=null==(n=window.history.state)?void 0:n.rememberedState)?t:{},e.scrollRegions=null!=(i=null==(r=window.history.state)?void 0:r.scrollRegions)?i:[],this.setPage(e,{preserveScroll:s.preserveScroll}).then(function(){s.preserveScroll&&o.restoreScrollPositions()})},isLocationVisitResponse:function(e){return e&&409===e.status&&e.headers["x-inertia-location"]},isInertiaResponse:function(e){return null==e?void 0:e.headers["x-inertia"]},createVisitId:function(){return this.visitId={},this.visitId},cancelVisit:function(e,t){var n=t.cancelled,i=void 0!==n&&n,r=t.interrupted,o=void 0!==r&&r;!e||e.completed||e.cancelled||e.interrupted||(e.cancelToken.cancel(),e.onCancel(),e.completed=!1,e.cancelled=i,e.interrupted=o,a(e),e.onFinish(e))},finishVisit:function(e){e.cancelled||e.interrupted||(e.completed=!0,e.cancelled=!1,e.interrupted=!1,a(e),e.onFinish(e))},resolvePreserveOption:function(e,t){return"function"==typeof e?e(t):"errors"===e?Object.keys(this.resolveErrors(t)).length>0:e},visit:function(e,n){var i=this,a=void 0===n?{}:n,l=a.method,p=void 0===l?"get":l,v=a.data,f=void 0===v?{}:v,m=a.replace,g=void 0!==m&&m,w=a.preserveScroll,y=void 0!==w&&w,S=a.preserveState,b=void 0!==S&&S,P=a.only,E=void 0===P?[]:P,I=a.headers,V=void 0===I?{}:I,L=a.errorBag,C=void 0===L?null:L,k=a.forceFormData,x=void 0!==k&&k,O=a.onCancelToken,R=void 0===O?function(){return{}}:O,T=a.onBefore,j=void 0===T?function(){return{}}:T,F=a.onStart,B=void 0===F?function(){return{}}:F,q=a.onProgress,A=void 0===q?function(){return{}}:q,D=a.onFinish,N=void 0===D?function(){return{}}:D,X=a.onCancel,J=void 0===X?function(){return{}}:X,H=a.onSuccess,M=void 0===H?function(){return{}}:H,W=a.onError,K=void 0===W?function(){return{}}:W,U=d(p=p.toLowerCase(),c(e),f);e=U[0];var z=function e(t){return t instanceof File||t instanceof Blob||t instanceof FileList||"object"==typeof t&&null!==t&&void 0!==Object.values(t).find(function(t){return e(t)})}(f=U[1]);"get"!==p&&(z||x)&&(f=h(f));var Q={url:e,method:p,data:f,replace:g,preserveScroll:y,preserveState:b,only:E,headers:V,errorBag:C,forceFormData:x,onCancelToken:R,onBefore:j,onStart:B,onProgress:A,onFinish:N,onCancel:J,onSuccess:M,onError:K};if(!1!==j(Q)&&function(e){return s("before",{cancelable:!0,detail:{visit:e}})}(Q)){this.cancelVisit(this.activeVisit,{interrupted:!0}),this.saveScrollPositions();var _=this.createVisitId();return this.activeVisit=Q,this.activeVisit.cancelToken=t.CancelToken.source(),R({cancel:function(){return i.cancelVisit(i.activeVisit,{cancelled:!0})}}),function(e){s("start",{detail:{visit:e}})}(Q),B(Q),new Proxy(t({method:p,url:u(e).href,data:"get"===p?{}:f,params:"get"===p?f:{},cancelToken:this.activeVisit.cancelToken.token,headers:r({},V,{Accept:"text/html, application/xhtml+xml","X-Requested-With":"XMLHttpRequest","X-Inertia":!0},E.length?{"X-Inertia-Partial-Component":this.page.component,"X-Inertia-Partial-Data":E.join(",")}:{},C?{"X-Inertia-Error-Bag":C}:{},this.page.version?{"X-Inertia-Version":this.page.version}:{}),onUploadProgress:function(e){z&&(e.percentage=Math.round(e.loaded/e.total*100),function(e){s("progress",{detail:{progress:e}})}(e),A(e))}}).then(function(t){var n;if(!i.isInertiaResponse(t))return Promise.reject({response:t});E.length&&t.data.component===i.page.component&&(t.data.props=r({},i.page.props,t.data.props)),y=i.resolvePreserveOption(y,t.data),(b=i.resolvePreserveOption(b,t.data))&&null!=(n=window.history.state)&&n.rememberedState&&t.data.component===i.page.component&&(t.data.rememberedState=window.history.state.rememberedState);var o=c(t.data.url);return e.hash&&!o.hash&&u(e).href===o.href&&(o.hash=e.hash,t.data.url=o.href),i.setPage(t.data,{visitId:_,replace:g,preserveScroll:y,preserveState:b})}).then(function(){var e=i.resolveErrors(i.page);return Object.keys(e).length>0?(function(e){s("error",{detail:{errors:e}})}(e[C]||e),K(e[C]||e)):(s("success",{detail:{page:i.page}}),M(i.page))}).catch(function(t){if(i.isInertiaResponse(t.response))return i.setPage(t.response.data,{visitId:_});if(i.isLocationVisitResponse(t.response)){var n=c(t.response.headers["x-inertia-location"]);e.hash&&!n.hash&&u(e).href===n.href&&(n.hash=e.hash),i.locationVisit(n,y)}else{if(!t.response)return Promise.reject(t);s("invalid",{cancelable:!0,detail:{response:t.response}})&&o.show(t.response.data)}}).then(function(){i.finishVisit(Q)}).catch(function(e){if(!t.isCancel(e)){var n=s("exception",{cancelable:!0,detail:{exception:e}});if(i.finishVisit(Q),n)return Promise.reject(e)}}),{get:function(e,t){return["then","catch","finally"].includes(t)&&console.warn("Inertia.js visit promises have been deprecated and will be removed in a future release. Please use the new visit event callbacks instead.\n\nLearn more at https://inertiajs.com/manual-visits#promise-deprecation"),"function"==typeof e[t]?e[t].bind(e):e[t]}})}},setPage:function(e,t){var n=this,i=void 0===t?{}:t,r=i.visitId,o=void 0===r?this.createVisitId():r,s=i.replace,a=void 0!==s&&s,d=i.preserveScroll,u=void 0!==d&&d,h=i.preserveState,p=void 0!==h&&h;return Promise.resolve(this.resolveComponent(e.component)).then(function(t){if(o===n.visitId){e.scrollRegions=e.scrollRegions||[],e.rememberedState=e.rememberedState||{},(a=a||c(e.url).href===window.location.href)?n.replaceState(e):n.pushState(e);var i=JSON.parse(JSON.stringify(e));i.props=n.transformProps(i.props),n.swapComponent({component:t,page:i,preserveState:p}).then(function(){u||n.resetScrollPositions(),a||l(e)})}})},pushState:function(e){this.page=e,window.history.pushState(e,"",e.url)},replaceState:function(e){this.page=e,window.history.replaceState(e,"",e.url)},handlePopstateEvent:function(e){var t=this;if(null!==e.state){var n=e.state,i=this.createVisitId();return Promise.resolve(this.resolveComponent(n.component)).then(function(e){i===t.visitId&&(t.page=n,t.swapComponent({component:e,page:n,preserveState:!1}).then(function(){t.restoreScrollPositions(),l(n)}))})}var o=c(this.page.url);o.hash=window.location.hash,this.replaceState(r({},this.page,{url:o.href})),this.resetScrollPositions()},get:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,r({},n,{method:"get",data:t}))},reload:function(e){return void 0===e&&(e={}),this.visit(window.location.href,r({},e,{preserveScroll:!0,preserveState:!0}))},replace:function(e,t){var n;return void 0===t&&(t={}),console.warn("Inertia.replace() has been deprecated and will be removed in a future release. Please use Inertia."+(null!=(n=t.method)?n:"get")+"() instead."),this.visit(e,r({preserveState:!0},t,{replace:!0}))},post:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,r({preserveState:!0},n,{method:"post",data:t}))},put:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,r({preserveState:!0},n,{method:"put",data:t}))},patch:function(e,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),this.visit(e,r({preserveState:!0},n,{method:"patch",data:t}))},delete:function(e,t){return void 0===t&&(t={}),this.visit(e,r({preserveState:!0},t,{method:"delete"}))},remember:function(e,t){var n;void 0===t&&(t="default"),this.replaceState(r({},this.page,{rememberedState:r({},this.page.rememberedState,(n={},n[t]=e,n))}))},restore:function(e){var t,n;return void 0===e&&(e="default"),null==(t=window.history.state)||null==(n=t.rememberedState)?void 0:n[e]},on:function(e,t){var n=function(e){var n=t(e);e.cancelable&&!e.defaultPrevented&&!1===n&&e.preventDefault()};return document.addEventListener("inertia:"+e,n),function(){return document.removeEventListener("inertia:"+e,n)}}},exports.hrefToUrl=c,exports.mergeDataIntoQueryString=d,exports.shouldIntercept=function(e){var t="a"===e.currentTarget.tagName.toLowerCase();return!(e.target&&e.target.isContentEditable||e.defaultPrevented||t&&e.which>1||t&&e.altKey||t&&e.ctrlKey||t&&e.metaKey||t&&e.shiftKey)},exports.urlWithoutHash=u;
 //# sourceMappingURL=index.js.map
 
 
@@ -3335,8 +3335,10 @@ __webpack_require__.r(__webpack_exports__);
     NavLink: _Components_Layout_NavLink__WEBPACK_IMPORTED_MODULE_2__.default,
     ResponsiveNavLink: _Components_Layout_ResponsiveNavLink__WEBPACK_IMPORTED_MODULE_3__.default
   },
-  data: function data() {
-    return {};
+  meta: function meta() {
+    return {
+      titleTemplate: "%s - ".concat(this.$page.props.appName)
+    };
   }
 });
 
@@ -3390,6 +3392,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
     PostCreator: _Components_PostCreator__WEBPACK_IMPORTED_MODULE_1__.default
+  },
+  meta: function meta() {
+    return {
+      title: "/".concat(this.board.url, "/ - ").concat(this.board.name)
+    };
   }
 });
 
@@ -3421,6 +3428,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  meta: function meta() {
+    return {
+      title: this.$page.props.appName,
+      titleTemplate: null
+    };
   }
 });
 
@@ -3472,6 +3485,17 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
     PostCreator: _Components_PostCreator__WEBPACK_IMPORTED_MODULE_1__.default,
     Post: _Components_Post__WEBPACK_IMPORTED_MODULE_2__.default
+  },
+  meta: function meta() {
+    var threadTitle = this.thread.subject || this.thread.content.split(' ').slice(0, 5).join(' ');
+    return {
+      title: "/".concat(this.board.url, "/ - ").concat(threadTitle, " - ").concat(this.board.name)
+    };
+  },
+  data: function data() {
+    return {
+      showPostCreator: true
+    };
   }
 });
 
@@ -3487,8 +3511,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue */ "./node_modules/@inertiajs/inertia-vue/dist/index.js");
 /* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! portal-vue */ "./node_modules/portal-vue/dist/portal-vue.common.js");
+/* harmony import */ var vue_meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-meta */ "./node_modules/vue-meta/dist/vue-meta.esm.js");
+
 
 
 
@@ -3496,16 +3522,19 @@ __webpack_require__.r(__webpack_exports__);
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-vue__WEBPACK_IMPORTED_MODULE_3__.default.mixin({
+vue__WEBPACK_IMPORTED_MODULE_4__.default.mixin({
   methods: {
     route: route
   }
 });
-vue__WEBPACK_IMPORTED_MODULE_3__.default.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__.plugin);
-vue__WEBPACK_IMPORTED_MODULE_3__.default.use(portal_vue__WEBPACK_IMPORTED_MODULE_2__.default);
+vue__WEBPACK_IMPORTED_MODULE_4__.default.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__.plugin);
+vue__WEBPACK_IMPORTED_MODULE_4__.default.use(portal_vue__WEBPACK_IMPORTED_MODULE_2__.default);
+vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue_meta__WEBPACK_IMPORTED_MODULE_3__.default, {
+  keyName: 'meta'
+});
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_1__.InertiaProgress.init();
 var el = document.getElementById('app');
-new vue__WEBPACK_IMPORTED_MODULE_3__.default({
+new vue__WEBPACK_IMPORTED_MODULE_4__.default({
   render: function render(h) {
     return h(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__.App, {
       props: {
@@ -3517,6 +3546,1765 @@ new vue__WEBPACK_IMPORTED_MODULE_3__.default({
     });
   }
 }).$mount(el);
+
+/***/ }),
+
+/***/ "./node_modules/lodash.clonedeep/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash.clonedeep/index.js ***!
+  \************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] =
+cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+cloneableTags[boolTag] = cloneableTags[dateTag] =
+cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+cloneableTags[int32Tag] = cloneableTags[mapTag] =
+cloneableTags[numberTag] = cloneableTags[objectTag] =
+cloneableTags[regexpTag] = cloneableTags[setTag] =
+cloneableTags[stringTag] = cloneableTags[symbolTag] =
+cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] =
+cloneableTags[weakMapTag] = false;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/**
+ * Adds the key-value `pair` to `map`.
+ *
+ * @private
+ * @param {Object} map The map to modify.
+ * @param {Array} pair The key-value pair to add.
+ * @returns {Object} Returns `map`.
+ */
+function addMapEntry(map, pair) {
+  // Don't return `map.set` because it's not chainable in IE 11.
+  map.set(pair[0], pair[1]);
+  return map;
+}
+
+/**
+ * Adds `value` to `set`.
+ *
+ * @private
+ * @param {Object} set The set to modify.
+ * @param {*} value The value to add.
+ * @returns {Object} Returns `set`.
+ */
+function addSetEntry(set, value) {
+  // Don't return `set.add` because it's not chainable in IE 11.
+  set.add(value);
+  return set;
+}
+
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    Symbol = root.Symbol,
+    Uint8Array = root.Uint8Array,
+    getPrototype = overArg(Object.getPrototypeOf, Object),
+    objectCreate = Object.create,
+    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+    splice = arrayProto.splice;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols,
+    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+    nativeKeys = overArg(Object.keys, Object);
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView'),
+    Map = getNative(root, 'Map'),
+    Promise = getNative(root, 'Promise'),
+    Set = getNative(root, 'Set'),
+    WeakMap = getNative(root, 'WeakMap'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  this.__data__ = new ListCache(entries);
+}
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new ListCache;
+}
+
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  return this.__data__['delete'](key);
+}
+
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
+function stackSet(key, value) {
+  var cache = this.__data__;
+  if (cache instanceof ListCache) {
+    var pairs = cache.__data__;
+    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+      pairs.push([key, value]);
+      return this;
+    }
+    cache = this.__data__ = new MapCache(pairs);
+  }
+  cache.set(key, value);
+  return this;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  // Safari 9 makes `arguments.length` enumerable in strict mode.
+  var result = (isArray(value) || isArguments(value))
+    ? baseTimes(value.length, String)
+    : [];
+
+  var length = result.length,
+      skipIndexes = !!length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Assigns `value` to `key` of `object` if the existing value is not equivalent
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    object[key] = value;
+  }
+}
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @param {boolean} [isFull] Specify a clone including symbols.
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+  var result;
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+  if (result !== undefined) {
+    return result;
+  }
+  if (!isObject(value)) {
+    return value;
+  }
+  var isArr = isArray(value);
+  if (isArr) {
+    result = initCloneArray(value);
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+      if (isHostObject(value)) {
+        return object ? value : {};
+      }
+      result = initCloneObject(isFunc ? {} : value);
+      if (!isDeep) {
+        return copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+      result = initCloneByTag(value, tag, baseClone, isDeep);
+    }
+  }
+  // Check for circular references and return its corresponding clone.
+  stack || (stack = new Stack);
+  var stacked = stack.get(value);
+  if (stacked) {
+    return stacked;
+  }
+  stack.set(value, result);
+
+  if (!isArr) {
+    var props = isFull ? getAllKeys(value) : keys(value);
+  }
+  arrayEach(props || value, function(subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    }
+    // Recursively populate clone (susceptible to call stack limits).
+    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+  });
+  return result;
+}
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} prototype The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+function baseCreate(proto) {
+  return isObject(proto) ? objectCreate(proto) : {};
+}
+
+/**
+ * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+ * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Function} symbolsFunc The function to get the symbols of `object`.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+  var result = keysFunc(object);
+  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+}
+
+/**
+ * The base implementation of `getTag`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  return objectToString.call(value);
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Creates a clone of  `buffer`.
+ *
+ * @private
+ * @param {Buffer} buffer The buffer to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Buffer} Returns the cloned buffer.
+ */
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var result = new buffer.constructor(buffer.length);
+  buffer.copy(result);
+  return result;
+}
+
+/**
+ * Creates a clone of `arrayBuffer`.
+ *
+ * @private
+ * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+ * @returns {ArrayBuffer} Returns the cloned array buffer.
+ */
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+  return result;
+}
+
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+/**
+ * Creates a clone of `map`.
+ *
+ * @private
+ * @param {Object} map The map to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned map.
+ */
+function cloneMap(map, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+  return arrayReduce(array, addMapEntry, new map.constructor);
+}
+
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+/**
+ * Creates a clone of `set`.
+ *
+ * @private
+ * @param {Object} set The set to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned set.
+ */
+function cloneSet(set, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+  return arrayReduce(array, addSetEntry, new set.constructor);
+}
+
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+/**
+ * Creates a clone of `typedArray`.
+ *
+ * @private
+ * @param {Object} typedArray The typed array to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned typed array.
+ */
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+/**
+ * Copies properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
+ */
+function copyObject(source, props, object, customizer) {
+  object || (object = {});
+
+  var index = -1,
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    assignValue(object, key, newValue === undefined ? source[key] : newValue);
+  }
+  return object;
+}
+
+/**
+ * Copies own symbol properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+/**
+ * Creates an array of own enumerable property names and symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeys(object) {
+  return baseGetAllKeys(object, keys, getSymbols);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Creates an array of the own enumerable symbol properties of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11,
+// for data views in Edge < 14, and promises in Node.js.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = objectToString.call(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : undefined;
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+function initCloneArray(array) {
+  var length = array.length,
+      result = array.constructor(length);
+
+  // Add properties assigned by `RegExp#exec`.
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+  return result;
+}
+
+/**
+ * Initializes an object clone.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !isPrototype(object))
+    ? baseCreate(getPrototype(object))
+    : {};
+}
+
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneByTag(object, tag, cloneFunc, isDeep) {
+  var Ctor = object.constructor;
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag: case float64Tag:
+    case int8Tag: case int16Tag: case int32Tag:
+    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return cloneMap(object, isDeep, cloneFunc);
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return cloneSet(object, isDeep, cloneFunc);
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * This method is like `_.clone` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.clone
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var deep = _.cloneDeep(objects);
+ * console.log(deep[0] === objects[0]);
+ * // => false
+ */
+function cloneDeep(value) {
+  return baseClone(value, true, true);
+}
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+function isArguments(value) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = cloneDeep;
+
 
 /***/ }),
 
@@ -3541,14 +5329,15 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.20';
+  var VERSION = '4.17.21';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
 
   /** Error message constants. */
   var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
-      FUNC_ERROR_TEXT = 'Expected a function';
+      FUNC_ERROR_TEXT = 'Expected a function',
+      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`';
 
   /** Used to stand-in for `undefined` hash values. */
   var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -3681,10 +5470,11 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
   var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
       reHasRegExpChar = RegExp(reRegExpChar.source);
 
-  /** Used to match leading and trailing whitespace. */
-  var reTrim = /^\s+|\s+$/g,
-      reTrimStart = /^\s+/,
-      reTrimEnd = /\s+$/;
+  /** Used to match leading whitespace. */
+  var reTrimStart = /^\s+/;
+
+  /** Used to match a single whitespace character. */
+  var reWhitespace = /\s/;
 
   /** Used to match wrap detail comments. */
   var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
@@ -3693,6 +5483,18 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
   /** Used to match words composed of alphanumeric characters. */
   var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
+
+  /**
+   * Used to validate the `validate` option in `_.template` variable.
+   *
+   * Forbids characters which could potentially change the meaning of the function argument definition:
+   * - "()," (modification of function parameters)
+   * - "=" (default value)
+   * - "[]{}" (destructuring of function parameters)
+   * - "/" (beginning of a comment)
+   * - whitespace
+   */
+  var reForbiddenIdentifierChars = /[()=,{}\[\]\/\s]/;
 
   /** Used to match backslashes in property paths. */
   var reEscapeChar = /\\(\\)?/g;
@@ -4523,6 +6325,19 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
   }
 
   /**
+   * The base implementation of `_.trim`.
+   *
+   * @private
+   * @param {string} string The string to trim.
+   * @returns {string} Returns the trimmed string.
+   */
+  function baseTrim(string) {
+    return string
+      ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
+      : string;
+  }
+
+  /**
    * The base implementation of `_.unary` without support for storing metadata.
    *
    * @private
@@ -4853,6 +6668,21 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     return hasUnicode(string)
       ? unicodeToArray(string)
       : asciiToArray(string);
+  }
+
+  /**
+   * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+   * character of `string`.
+   *
+   * @private
+   * @param {string} string The string to inspect.
+   * @returns {number} Returns the index of the last non-whitespace character.
+   */
+  function trimmedEndIndex(string) {
+    var index = string.length;
+
+    while (index-- && reWhitespace.test(string.charAt(index))) {}
+    return index;
   }
 
   /**
@@ -16023,7 +17853,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
       if (typeof value != 'string') {
         return value === 0 ? value : +value;
       }
-      value = value.replace(reTrim, '');
+      value = baseTrim(value);
       var isBinary = reIsBinary.test(value);
       return (isBinary || reIsOctal.test(value))
         ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
@@ -18395,6 +20225,12 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
       }
+      // Throw an error if a forbidden character was found in `variable`, to prevent
+      // potential command injection attacks.
+      else if (reForbiddenIdentifierChars.test(variable)) {
+        throw new Error(INVALID_TEMPL_VAR_ERROR_TEXT);
+      }
+
       // Cleanup code by stripping empty strings.
       source = (isEvaluating ? source.replace(reEmptyStringLeading, '') : source)
         .replace(reEmptyStringMiddle, '$1')
@@ -18508,7 +20344,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     function trim(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrim, '');
+        return baseTrim(string);
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -18543,7 +20379,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     function trimEnd(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrimEnd, '');
+        return string.slice(0, trimmedEndIndex(string) + 1);
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -24127,6 +25963,2180 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-meta/dist/vue-meta.esm.js":
+/*!****************************************************!*\
+  !*** ./node_modules/vue-meta/dist/vue-meta.esm.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! deepmerge */ "./node_modules/vue-meta/node_modules/deepmerge/dist/cjs.js");
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(deepmerge__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * vue-meta v2.4.0
+ * (c) 2020
+ * - Declan de Wet
+ * - Sébastien Chopin (@Atinux)
+ * - Pim (@pimlie)
+ * - All the amazing contributors
+ * @license MIT
+ */
+
+
+
+var version = "2.4.0";
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = o[Symbol.iterator]();
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
+/**
+ * checks if passed argument is an array
+ * @param  {any}  arg - the object to check
+ * @return {Boolean} - true if `arg` is an array
+ */
+function isArray(arg) {
+  return Array.isArray(arg);
+}
+function isUndefined(arg) {
+  return typeof arg === 'undefined';
+}
+function isObject(arg) {
+  return _typeof(arg) === 'object';
+}
+function isPureObject(arg) {
+  return _typeof(arg) === 'object' && arg !== null;
+}
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+function isString(arg) {
+  return typeof arg === 'string';
+}
+
+function hasGlobalWindowFn() {
+  try {
+    return !isUndefined(window);
+  } catch (e) {
+    return false;
+  }
+}
+var hasGlobalWindow = hasGlobalWindowFn();
+
+var _global = hasGlobalWindow ? window : __webpack_require__.g;
+
+var console = _global.console || {};
+function warn(str) {
+  /* istanbul ignore next */
+  if (!console || !console.warn) {
+    return;
+  }
+
+  console.warn(str);
+}
+var showWarningNotSupported = function showWarningNotSupported() {
+  return warn('This vue app/component has no vue-meta configuration');
+};
+
+/**
+ * These are constant variables used throughout the application.
+ */
+// set some sane defaults
+var defaultInfo = {
+  title: undefined,
+  titleChunk: '',
+  titleTemplate: '%s',
+  htmlAttrs: {},
+  bodyAttrs: {},
+  headAttrs: {},
+  base: [],
+  link: [],
+  meta: [],
+  style: [],
+  script: [],
+  noscript: [],
+  __dangerouslyDisableSanitizers: [],
+  __dangerouslyDisableSanitizersByTagID: {}
+};
+var rootConfigKey = '_vueMeta'; // This is the name of the component option that contains all the information that
+// gets converted to the various meta tags & attributes for the page.
+
+var keyName = 'metaInfo'; // This is the attribute vue-meta arguments on elements to know which it should
+// manage and which it should ignore.
+
+var attribute = 'data-vue-meta'; // This is the attribute that goes on the `html` tag to inform `vue-meta`
+// that the server has already generated the meta tags for the initial render.
+
+var ssrAttribute = 'data-vue-meta-server-rendered'; // This is the property that tells vue-meta to overwrite (instead of append)
+// an item in a tag list. For example, if you have two `meta` tag list items
+// that both have `vmid` of "description", then vue-meta will overwrite the
+// shallowest one with the deepest one.
+
+var tagIDKeyName = 'vmid'; // This is the key name for possible meta templates
+
+var metaTemplateKeyName = 'template'; // This is the key name for the content-holding property
+
+var contentKeyName = 'content'; // The id used for the ssr app
+
+var ssrAppId = 'ssr'; // How long meta update
+
+var debounceWait = 10; // How long meta update
+
+var waitOnDestroyed = true;
+var defaultOptions = {
+  keyName: keyName,
+  attribute: attribute,
+  ssrAttribute: ssrAttribute,
+  tagIDKeyName: tagIDKeyName,
+  contentKeyName: contentKeyName,
+  metaTemplateKeyName: metaTemplateKeyName,
+  waitOnDestroyed: waitOnDestroyed,
+  debounceWait: debounceWait,
+  ssrAppId: ssrAppId
+}; // might be a bit ugly, but minimizes the browser bundles a bit
+
+var defaultInfoKeys = Object.keys(defaultInfo); // The metaInfo property keys which are used to disable escaping
+
+var disableOptionKeys = [defaultInfoKeys[12], defaultInfoKeys[13]]; // List of metaInfo property keys which are configuration options (and dont generate html)
+
+var metaInfoOptionKeys = [defaultInfoKeys[1], defaultInfoKeys[2], 'changed'].concat(disableOptionKeys); // List of metaInfo property keys which only generates attributes and no tags
+
+var metaInfoAttributeKeys = [defaultInfoKeys[3], defaultInfoKeys[4], defaultInfoKeys[5]]; // HTML elements which support the onload event
+
+var tagsSupportingOnload = ['link', 'style', 'script']; // HTML elements which dont have a head tag (shortened to our needs)
+// see: https://www.w3.org/TR/html52/document-metadata.html
+
+var tagsWithoutEndTag = ['base', 'meta', 'link']; // HTML elements which can have inner content (shortened to our needs)
+
+var tagsWithInnerContent = ['noscript', 'script', 'style']; // Attributes which are inserted as childNodes instead of HTMLAttribute
+
+var tagAttributeAsInnerContent = ['innerHTML', 'cssText', 'json'];
+var tagProperties = ['once', 'skip', 'template']; // Attributes which should be added with data- prefix
+
+var commonDataAttributes = ['body', 'pbody']; // from: https://github.com/kangax/html-minifier/blob/gh-pages/src/htmlminifier.js#L202
+
+var booleanHtmlAttributes = ['allowfullscreen', 'amp', 'amp-boilerplate', 'async', 'autofocus', 'autoplay', 'checked', 'compact', 'controls', 'declare', 'default', 'defaultchecked', 'defaultmuted', 'defaultselected', 'defer', 'disabled', 'enabled', 'formnovalidate', 'hidden', 'indeterminate', 'inert', 'ismap', 'itemscope', 'loop', 'multiple', 'muted', 'nohref', 'noresize', 'noshade', 'novalidate', 'nowrap', 'open', 'pauseonexit', 'readonly', 'required', 'reversed', 'scoped', 'seamless', 'selected', 'sortable', 'truespeed', 'typemustmatch', 'visible'];
+
+var batchId = null;
+function triggerUpdate(_ref, rootVm, hookName) {
+  var debounceWait = _ref.debounceWait;
+
+  // if an update was triggered during initialization or when an update was triggered by the
+  // metaInfo watcher, set initialized to null
+  // then we keep falsy value but know we need to run a triggerUpdate after initialization
+  if (!rootVm[rootConfigKey].initialized && (rootVm[rootConfigKey].initializing || hookName === 'watcher')) {
+    rootVm[rootConfigKey].initialized = null;
+  }
+
+  if (rootVm[rootConfigKey].initialized && !rootVm[rootConfigKey].pausing) {
+    // batch potential DOM updates to prevent extraneous re-rendering
+    // eslint-disable-next-line no-void
+    batchUpdate(function () {
+      return void rootVm.$meta().refresh();
+    }, debounceWait);
+  }
+}
+/**
+ * Performs a batched update.
+ *
+ * @param  {(null|Number)} id - the ID of this update
+ * @param  {Function} callback - the update to perform
+ * @return {Number} id - a new ID
+ */
+
+function batchUpdate(callback, timeout) {
+  timeout = timeout === undefined ? 10 : timeout;
+
+  if (!timeout) {
+    callback();
+    return;
+  }
+
+  clearTimeout(batchId);
+  batchId = setTimeout(function () {
+    callback();
+  }, timeout);
+  return batchId;
+}
+
+/*
+ * To reduce build size, this file provides simple polyfills without
+ * overly excessive type checking and without modifying
+ * the global Array.prototype
+ * The polyfills are automatically removed in the commonjs build
+ * Also, only files in client/ & shared/ should use these functions
+ * files in server/ still use normal js function
+ */
+function find(array, predicate, thisArg) {
+  if ( !Array.prototype.find) {
+    // idx needs to be a Number, for..in returns string
+    for (var idx = 0; idx < array.length; idx++) {
+      if (predicate.call(thisArg, array[idx], idx, array)) {
+        return array[idx];
+      }
+    }
+
+    return;
+  }
+
+  return array.find(predicate, thisArg);
+}
+function findIndex(array, predicate, thisArg) {
+  if ( !Array.prototype.findIndex) {
+    // idx needs to be a Number, for..in returns string
+    for (var idx = 0; idx < array.length; idx++) {
+      if (predicate.call(thisArg, array[idx], idx, array)) {
+        return idx;
+      }
+    }
+
+    return -1;
+  }
+
+  return array.findIndex(predicate, thisArg);
+}
+function toArray(arg) {
+  if ( !Array.from) {
+    return Array.prototype.slice.call(arg);
+  }
+
+  return Array.from(arg);
+}
+function includes(array, value) {
+  if ( !Array.prototype.includes) {
+    for (var idx in array) {
+      if (array[idx] === value) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  return array.includes(value);
+}
+
+var querySelector = function querySelector(arg, el) {
+  return (el || document).querySelectorAll(arg);
+};
+function getTag(tags, tag) {
+  if (!tags[tag]) {
+    tags[tag] = document.getElementsByTagName(tag)[0];
+  }
+
+  return tags[tag];
+}
+function getElementsKey(_ref) {
+  var body = _ref.body,
+      pbody = _ref.pbody;
+  return body ? 'body' : pbody ? 'pbody' : 'head';
+}
+function queryElements(parentNode, _ref2, attributes) {
+  var appId = _ref2.appId,
+      attribute = _ref2.attribute,
+      type = _ref2.type,
+      tagIDKeyName = _ref2.tagIDKeyName;
+  attributes = attributes || {};
+  var queries = ["".concat(type, "[").concat(attribute, "=\"").concat(appId, "\"]"), "".concat(type, "[data-").concat(tagIDKeyName, "]")].map(function (query) {
+    for (var key in attributes) {
+      var val = attributes[key];
+      var attributeValue = val && val !== true ? "=\"".concat(val, "\"") : '';
+      query += "[data-".concat(key).concat(attributeValue, "]");
+    }
+
+    return query;
+  });
+  return toArray(querySelector(queries.join(', '), parentNode));
+}
+function removeElementsByAppId(_ref3, appId) {
+  var attribute = _ref3.attribute;
+  toArray(querySelector("[".concat(attribute, "=\"").concat(appId, "\"]"))).map(function (el) {
+    return el.remove();
+  });
+}
+function removeAttribute(el, attributeName) {
+  el.removeAttribute(attributeName);
+}
+
+function hasMetaInfo(vm) {
+  vm = vm || this;
+  return vm && (vm[rootConfigKey] === true || isObject(vm[rootConfigKey]));
+} // a component is in a metaInfo branch when itself has meta info or one of its (grand-)children has
+
+function inMetaInfoBranch(vm) {
+  vm = vm || this;
+  return vm && !isUndefined(vm[rootConfigKey]);
+}
+
+function pause(rootVm, refresh) {
+  rootVm[rootConfigKey].pausing = true;
+  return function () {
+    return resume(rootVm, refresh);
+  };
+}
+function resume(rootVm, refresh) {
+  rootVm[rootConfigKey].pausing = false;
+
+  if (refresh || refresh === undefined) {
+    return rootVm.$meta().refresh();
+  }
+}
+
+function addNavGuards(rootVm) {
+  var router = rootVm.$router; // return when nav guards already added or no router exists
+
+  if (rootVm[rootConfigKey].navGuards || !router) {
+    /* istanbul ignore next */
+    return;
+  }
+
+  rootVm[rootConfigKey].navGuards = true;
+  router.beforeEach(function (to, from, next) {
+    pause(rootVm);
+    next();
+  });
+  router.afterEach(function () {
+    rootVm.$nextTick(function () {
+      var _resume = resume(rootVm),
+          metaInfo = _resume.metaInfo;
+
+      if (metaInfo && isFunction(metaInfo.afterNavigation)) {
+        metaInfo.afterNavigation(metaInfo);
+      }
+    });
+  });
+}
+
+var appId = 1;
+function createMixin(Vue, options) {
+  // for which Vue lifecycle hooks should the metaInfo be refreshed
+  var updateOnLifecycleHook = ['activated', 'deactivated', 'beforeMount'];
+  var wasServerRendered = false; // watch for client side component updates
+
+  return {
+    beforeCreate: function beforeCreate() {
+      var _this2 = this;
+
+      var rootKey = '$root';
+      var $root = this[rootKey];
+      var $options = this.$options;
+      var devtoolsEnabled = Vue.config.devtools;
+      Object.defineProperty(this, '_hasMetaInfo', {
+        configurable: true,
+        get: function get() {
+          // Show deprecation warning once when devtools enabled
+          if (devtoolsEnabled && !$root[rootConfigKey].deprecationWarningShown) {
+            warn('VueMeta DeprecationWarning: _hasMetaInfo has been deprecated and will be removed in a future version. Please use hasMetaInfo(vm) instead');
+            $root[rootConfigKey].deprecationWarningShown = true;
+          }
+
+          return hasMetaInfo(this);
+        }
+      });
+
+      if (this === $root) {
+        $root.$once('hook:beforeMount', function () {
+          wasServerRendered = this.$el && this.$el.nodeType === 1 && this.$el.hasAttribute('data-server-rendered'); // In most cases when you have a SSR app it will be the first app thats gonna be
+          // initiated, if we cant detect the data-server-rendered attribute from Vue but we
+          // do see our own ssrAttribute then _assume_ the Vue app with appId 1 is the ssr app
+          // attempted fix for #404 & #562, but we rly need to refactor how we pass appIds from
+          // ssr to the client
+
+          if (!wasServerRendered && $root[rootConfigKey] && $root[rootConfigKey].appId === 1) {
+            var htmlTag = getTag({}, 'html');
+            wasServerRendered = htmlTag && htmlTag.hasAttribute(options.ssrAttribute);
+          }
+        });
+      } // Add a marker to know if it uses metaInfo
+      // _vnode is used to know that it's attached to a real component
+      // useful if we use some mixin to add some meta tags (like nuxt-i18n)
+
+
+      if (isUndefined($options[options.keyName]) || $options[options.keyName] === null) {
+        return;
+      }
+
+      if (!$root[rootConfigKey]) {
+        $root[rootConfigKey] = {
+          appId: appId
+        };
+        appId++;
+
+        if (devtoolsEnabled && $root.$options[options.keyName]) {
+          // use nextTick so the children should be added to $root
+          this.$nextTick(function () {
+            // find the first child that lists fnOptions
+            var child = find($root.$children, function (c) {
+              return c.$vnode && c.$vnode.fnOptions;
+            });
+
+            if (child && child.$vnode.fnOptions[options.keyName]) {
+              warn("VueMeta has detected a possible global mixin which adds a ".concat(options.keyName, " property to all Vue components on the page. This could cause severe performance issues. If possible, use $meta().addApp to add meta information instead"));
+            }
+          });
+        }
+      } // to speed up updates we keep track of branches which have a component with vue-meta info defined
+      // if _vueMeta = true it has info, if _vueMeta = false a child has info
+
+
+      if (!this[rootConfigKey]) {
+        this[rootConfigKey] = true;
+        var parent = this.$parent;
+
+        while (parent && parent !== $root) {
+          if (isUndefined(parent[rootConfigKey])) {
+            parent[rootConfigKey] = false;
+          }
+
+          parent = parent.$parent;
+        }
+      } // coerce function-style metaInfo to a computed prop so we can observe
+      // it on creation
+
+
+      if (isFunction($options[options.keyName])) {
+        $options.computed = $options.computed || {};
+        $options.computed.$metaInfo = $options[options.keyName];
+
+        if (!this.$isServer) {
+          // if computed $metaInfo exists, watch it for updates & trigger a refresh
+          // when it changes (i.e. automatically handle async actions that affect metaInfo)
+          // credit for this suggestion goes to [Sébastien Chopin](https://github.com/Atinux)
+          this.$on('hook:created', function () {
+            this.$watch('$metaInfo', function () {
+              triggerUpdate(options, this[rootKey], 'watcher');
+            });
+          });
+        }
+      } // force an initial refresh on page load and prevent other lifecycleHooks
+      // to triggerUpdate until this initial refresh is finished
+      // this is to make sure that when a page is opened in an inactive tab which
+      // has throttled rAF/timers we still immediately set the page title
+
+
+      if (isUndefined($root[rootConfigKey].initialized)) {
+        $root[rootConfigKey].initialized = this.$isServer;
+
+        if (!$root[rootConfigKey].initialized) {
+          if (!$root[rootConfigKey].initializedSsr) {
+            $root[rootConfigKey].initializedSsr = true;
+            this.$on('hook:beforeMount', function () {
+              var $root = this[rootKey]; // if this Vue-app was server rendered, set the appId to 'ssr'
+              // only one SSR app per page is supported
+
+              if (wasServerRendered) {
+                $root[rootConfigKey].appId = options.ssrAppId;
+              }
+            });
+          } // we use the mounted hook here as on page load
+
+
+          this.$on('hook:mounted', function () {
+            var $root = this[rootKey];
+
+            if ($root[rootConfigKey].initialized) {
+              return;
+            } // used in triggerUpdate to check if a change was triggered
+            // during initialization
+
+
+            $root[rootConfigKey].initializing = true; // refresh meta in nextTick so all child components have loaded
+
+            this.$nextTick(function () {
+              var _$root$$meta$refresh = $root.$meta().refresh(),
+                  tags = _$root$$meta$refresh.tags,
+                  metaInfo = _$root$$meta$refresh.metaInfo; // After ssr hydration (identifier by tags === false) check
+              // if initialized was set to null in triggerUpdate. That'd mean
+              // that during initilazation changes where triggered which need
+              // to be applied OR a metaInfo watcher was triggered before the
+              // current hook was called
+              // (during initialization all changes are blocked)
+
+
+              if (tags === false && $root[rootConfigKey].initialized === null) {
+                this.$nextTick(function () {
+                  return triggerUpdate(options, $root, 'init');
+                });
+              }
+
+              $root[rootConfigKey].initialized = true;
+              delete $root[rootConfigKey].initializing; // add the navigation guards if they havent been added yet
+              // they are needed for the afterNavigation callback
+
+              if (!options.refreshOnceOnNavigation && metaInfo.afterNavigation) {
+                addNavGuards($root);
+              }
+            });
+          }); // add the navigation guards if requested
+
+          if (options.refreshOnceOnNavigation) {
+            addNavGuards($root);
+          }
+        }
+      }
+
+      this.$on('hook:destroyed', function () {
+        var _this = this;
+
+        // do not trigger refresh:
+        // - when user configured to not wait for transitions on destroyed
+        // - when the component doesnt have a parent
+        // - doesnt have metaInfo defined
+        if (!this.$parent || !hasMetaInfo(this)) {
+          return;
+        }
+
+        delete this._hasMetaInfo;
+        this.$nextTick(function () {
+          if (!options.waitOnDestroyed || !_this.$el || !_this.$el.offsetParent) {
+            triggerUpdate(options, _this.$root, 'destroyed');
+            return;
+          } // Wait that element is hidden before refreshing meta tags (to support animations)
+
+
+          var interval = setInterval(function () {
+            if (_this.$el && _this.$el.offsetParent !== null) {
+              /* istanbul ignore next line */
+              return;
+            }
+
+            clearInterval(interval);
+            triggerUpdate(options, _this.$root, 'destroyed');
+          }, 50);
+        });
+      }); // do not trigger refresh on the server side
+
+      if (this.$isServer) {
+        /* istanbul ignore next */
+        return;
+      } // no need to add this hooks on server side
+
+
+      updateOnLifecycleHook.forEach(function (lifecycleHook) {
+        _this2.$on("hook:".concat(lifecycleHook), function () {
+          triggerUpdate(options, this[rootKey], lifecycleHook);
+        });
+      });
+    }
+  };
+}
+
+function setOptions(options) {
+  // combine options
+  options = isObject(options) ? options : {}; // The options are set like this so they can
+  // be minified by terser while keeping the
+  // user api intact
+  // terser --mangle-properties keep_quoted=strict
+
+  /* eslint-disable dot-notation */
+
+  return {
+    keyName: options['keyName'] || defaultOptions.keyName,
+    attribute: options['attribute'] || defaultOptions.attribute,
+    ssrAttribute: options['ssrAttribute'] || defaultOptions.ssrAttribute,
+    tagIDKeyName: options['tagIDKeyName'] || defaultOptions.tagIDKeyName,
+    contentKeyName: options['contentKeyName'] || defaultOptions.contentKeyName,
+    metaTemplateKeyName: options['metaTemplateKeyName'] || defaultOptions.metaTemplateKeyName,
+    debounceWait: isUndefined(options['debounceWait']) ? defaultOptions.debounceWait : options['debounceWait'],
+    waitOnDestroyed: isUndefined(options['waitOnDestroyed']) ? defaultOptions.waitOnDestroyed : options['waitOnDestroyed'],
+    ssrAppId: options['ssrAppId'] || defaultOptions.ssrAppId,
+    refreshOnceOnNavigation: !!options['refreshOnceOnNavigation']
+  };
+  /* eslint-enable dot-notation */
+}
+function getOptions(options) {
+  var optionsCopy = {};
+
+  for (var key in options) {
+    optionsCopy[key] = options[key];
+  }
+
+  return optionsCopy;
+}
+
+function ensureIsArray(arg, key) {
+  if (!key || !isObject(arg)) {
+    return isArray(arg) ? arg : [];
+  }
+
+  if (!isArray(arg[key])) {
+    arg[key] = [];
+  }
+
+  return arg;
+}
+
+var serverSequences = [[/&/g, '&amp;'], [/</g, '&lt;'], [/>/g, '&gt;'], [/"/g, '&quot;'], [/'/g, '&#x27;']];
+var clientSequences = [[/&/g, "&"], [/</g, "<"], [/>/g, ">"], [/"/g, "\""], [/'/g, "'"]]; // sanitizes potentially dangerous characters
+
+function escape(info, options, escapeOptions, escapeKeys) {
+  var tagIDKeyName = options.tagIDKeyName;
+  var _escapeOptions$doEsca = escapeOptions.doEscape,
+      doEscape = _escapeOptions$doEsca === void 0 ? function (v) {
+    return v;
+  } : _escapeOptions$doEsca;
+  var escaped = {};
+
+  for (var key in info) {
+    var value = info[key]; // no need to escape configuration options
+
+    if (includes(metaInfoOptionKeys, key)) {
+      escaped[key] = value;
+      continue;
+    } // do not use destructuring for disableOptionKeys, it increases transpiled size
+    // due to var checks while we are guaranteed the structure of the cb
+
+
+    var disableKey = disableOptionKeys[0];
+
+    if (escapeOptions[disableKey] && includes(escapeOptions[disableKey], key)) {
+      // this info[key] doesnt need to escaped if the option is listed in __dangerouslyDisableSanitizers
+      escaped[key] = value;
+      continue;
+    }
+
+    var tagId = info[tagIDKeyName];
+
+    if (tagId) {
+      disableKey = disableOptionKeys[1]; // keys which are listed in __dangerouslyDisableSanitizersByTagID for the current vmid do not need to be escaped
+
+      if (escapeOptions[disableKey] && escapeOptions[disableKey][tagId] && includes(escapeOptions[disableKey][tagId], key)) {
+        escaped[key] = value;
+        continue;
+      }
+    }
+
+    if (isString(value)) {
+      escaped[key] = doEscape(value);
+    } else if (isArray(value)) {
+      escaped[key] = value.map(function (v) {
+        if (isPureObject(v)) {
+          return escape(v, options, escapeOptions, true);
+        }
+
+        return doEscape(v);
+      });
+    } else if (isPureObject(value)) {
+      escaped[key] = escape(value, options, escapeOptions, true);
+    } else {
+      escaped[key] = value;
+    }
+
+    if (escapeKeys) {
+      var escapedKey = doEscape(key);
+
+      if (key !== escapedKey) {
+        escaped[escapedKey] = escaped[key];
+        delete escaped[key];
+      }
+    }
+  }
+
+  return escaped;
+}
+function escapeMetaInfo(options, info, escapeSequences) {
+  escapeSequences = escapeSequences || []; // do not use destructuring for seq, it increases transpiled size
+  // due to var checks while we are guaranteed the structure of the cb
+
+  var escapeOptions = {
+    doEscape: function doEscape(value) {
+      return escapeSequences.reduce(function (val, seq) {
+        return val.replace(seq[0], seq[1]);
+      }, value);
+    }
+  };
+  disableOptionKeys.forEach(function (disableKey, index) {
+    if (index === 0) {
+      ensureIsArray(info, disableKey);
+    } else if (index === 1) {
+      for (var key in info[disableKey]) {
+        ensureIsArray(info[disableKey], key);
+      }
+    }
+
+    escapeOptions[disableKey] = info[disableKey];
+  }); // begin sanitization
+
+  return escape(info, options, escapeOptions);
+}
+
+function applyTemplate(_ref, headObject, template, chunk) {
+  var component = _ref.component,
+      metaTemplateKeyName = _ref.metaTemplateKeyName,
+      contentKeyName = _ref.contentKeyName;
+
+  if (template === true || headObject[metaTemplateKeyName] === true) {
+    // abort, template was already applied
+    return false;
+  }
+
+  if (isUndefined(template) && headObject[metaTemplateKeyName]) {
+    template = headObject[metaTemplateKeyName];
+    headObject[metaTemplateKeyName] = true;
+  } // return early if no template defined
+
+
+  if (!template) {
+    // cleanup faulty template properties
+    delete headObject[metaTemplateKeyName];
+    return false;
+  }
+
+  if (isUndefined(chunk)) {
+    chunk = headObject[contentKeyName];
+  }
+
+  headObject[contentKeyName] = isFunction(template) ? template.call(component, chunk) : template.replace(/%s/g, chunk);
+  return true;
+}
+
+function _arrayMerge(_ref, target, source) {
+  var component = _ref.component,
+      tagIDKeyName = _ref.tagIDKeyName,
+      metaTemplateKeyName = _ref.metaTemplateKeyName,
+      contentKeyName = _ref.contentKeyName;
+  // we concat the arrays without merging objects contained in,
+  // but we check for a `vmid` property on each object in the array
+  // using an O(1) lookup associative array exploit
+  var destination = [];
+
+  if (!target.length && !source.length) {
+    return destination;
+  }
+
+  target.forEach(function (targetItem, targetIndex) {
+    // no tagID so no need to check for duplicity
+    if (!targetItem[tagIDKeyName]) {
+      destination.push(targetItem);
+      return;
+    }
+
+    var sourceIndex = findIndex(source, function (item) {
+      return item[tagIDKeyName] === targetItem[tagIDKeyName];
+    });
+    var sourceItem = source[sourceIndex]; // source doesnt contain any duplicate vmid's, we can keep targetItem
+
+    if (sourceIndex === -1) {
+      destination.push(targetItem);
+      return;
+    } // when sourceItem explictly defines contentKeyName or innerHTML as undefined, its
+    // an indication that we need to skip the default behaviour or child has preference over parent
+    // which means we keep the targetItem and ignore/remove the sourceItem
+
+
+    if (contentKeyName in sourceItem && sourceItem[contentKeyName] === undefined || 'innerHTML' in sourceItem && sourceItem.innerHTML === undefined) {
+      destination.push(targetItem); // remove current index from source array so its not concatenated to destination below
+
+      source.splice(sourceIndex, 1);
+      return;
+    } // we now know that targetItem is a duplicate and we should ignore it in favor of sourceItem
+    // if source specifies null as content then ignore both the target as the source
+
+
+    if (sourceItem[contentKeyName] === null || sourceItem.innerHTML === null) {
+      // remove current index from source array so its not concatenated to destination below
+      source.splice(sourceIndex, 1);
+      return;
+    } // now we only need to check if the target has a template to combine it with the source
+
+
+    var targetTemplate = targetItem[metaTemplateKeyName];
+
+    if (!targetTemplate) {
+      return;
+    }
+
+    var sourceTemplate = sourceItem[metaTemplateKeyName];
+
+    if (!sourceTemplate) {
+      // use parent template and child content
+      applyTemplate({
+        component: component,
+        metaTemplateKeyName: metaTemplateKeyName,
+        contentKeyName: contentKeyName
+      }, sourceItem, targetTemplate); // set template to true to indicate template was already applied
+
+      sourceItem.template = true;
+      return;
+    }
+
+    if (!sourceItem[contentKeyName]) {
+      // use parent content and child template
+      applyTemplate({
+        component: component,
+        metaTemplateKeyName: metaTemplateKeyName,
+        contentKeyName: contentKeyName
+      }, sourceItem, undefined, targetItem[contentKeyName]);
+    }
+  });
+  return destination.concat(source);
+}
+var warningShown = false;
+function merge(target, source, options) {
+  options = options || {}; // remove properties explicitly set to false so child components can
+  // optionally _not_ overwrite the parents content
+  // (for array properties this is checked in arrayMerge)
+
+  if (source.title === undefined) {
+    delete source.title;
+  }
+
+  metaInfoAttributeKeys.forEach(function (attrKey) {
+    if (!source[attrKey]) {
+      return;
+    }
+
+    for (var key in source[attrKey]) {
+      if (key in source[attrKey] && source[attrKey][key] === undefined) {
+        if (includes(booleanHtmlAttributes, key) && !warningShown) {
+          warn('VueMeta: Please note that since v2 the value undefined is not used to indicate boolean attributes anymore, see migration guide for details');
+          warningShown = true;
+        }
+
+        delete source[attrKey][key];
+      }
+    }
+  });
+  return deepmerge__WEBPACK_IMPORTED_MODULE_0___default()(target, source, {
+    arrayMerge: function arrayMerge(t, s) {
+      return _arrayMerge(options, t, s);
+    }
+  });
+}
+
+function getComponentMetaInfo(options, component) {
+  return getComponentOption(options || {}, component, defaultInfo);
+}
+/**
+ * Returns the `opts.option` $option value of the given `opts.component`.
+ * If methods are encountered, they will be bound to the component context.
+ * If `opts.deep` is true, will recursively merge all child component
+ * `opts.option` $option values into the returned result.
+ *
+ * @param  {Object} opts - options
+ * @param  {Object} opts.component - Vue component to fetch option data from
+ * @param  {Boolean} opts.deep - look for data in child components as well?
+ * @param  {Function} opts.arrayMerge - how should arrays be merged?
+ * @param  {String} opts.keyName - the name of the option to look for
+ * @param  {Object} [result={}] - result so far
+ * @return {Object} result - final aggregated result
+ */
+
+function getComponentOption(options, component, result) {
+  result = result || {};
+
+  if (component._inactive) {
+    return result;
+  }
+
+  options = options || {};
+  var _options = options,
+      keyName = _options.keyName;
+  var $metaInfo = component.$metaInfo,
+      $options = component.$options,
+      $children = component.$children; // only collect option data if it exists
+
+  if ($options[keyName]) {
+    // if $metaInfo exists then [keyName] was defined as a function
+    // and set to the computed prop $metaInfo in the mixin
+    // using the computed prop should be a small performance increase
+    // because Vue caches those internally
+    var data = $metaInfo || $options[keyName]; // only merge data with result when its an object
+    // eg it could be a function when metaInfo() returns undefined
+    // dueo to the or statement above
+
+    if (isObject(data)) {
+      result = merge(result, data, options);
+    }
+  } // collect & aggregate child options if deep = true
+
+
+  if ($children.length) {
+    $children.forEach(function (childComponent) {
+      // check if the childComponent is in a branch
+      // return otherwise so we dont walk all component branches unnecessarily
+      if (!inMetaInfoBranch(childComponent)) {
+        return;
+      }
+
+      result = getComponentOption(options, childComponent, result);
+    });
+  }
+
+  return result;
+}
+
+var callbacks = [];
+function isDOMComplete(d) {
+  return (d || document).readyState === 'complete';
+}
+function addCallback(query, callback) {
+  if (arguments.length === 1) {
+    callback = query;
+    query = '';
+  }
+
+  callbacks.push([query, callback]);
+}
+function addCallbacks(_ref, type, tags, autoAddListeners) {
+  var tagIDKeyName = _ref.tagIDKeyName;
+  var hasAsyncCallback = false;
+  tags.forEach(function (tag) {
+    if (!tag[tagIDKeyName] || !tag.callback) {
+      return;
+    }
+
+    hasAsyncCallback = true;
+    addCallback("".concat(type, "[data-").concat(tagIDKeyName, "=\"").concat(tag[tagIDKeyName], "\"]"), tag.callback);
+  });
+
+  if (!autoAddListeners || !hasAsyncCallback) {
+    return hasAsyncCallback;
+  }
+
+  return addListeners();
+}
+function addListeners() {
+  if (isDOMComplete()) {
+    applyCallbacks();
+    return;
+  } // Instead of using a MutationObserver, we just apply
+
+  /* istanbul ignore next */
+
+
+  document.onreadystatechange = function () {
+    applyCallbacks();
+  };
+}
+function applyCallbacks(matchElement) {
+  callbacks.forEach(function (args) {
+    // do not use destructuring for args, it increases transpiled size
+    // due to var checks while we are guaranteed the structure of the cb
+    var query = args[0];
+    var callback = args[1];
+    var selector = "".concat(query, "[onload=\"this.__vm_l=1\"]");
+    var elements = [];
+
+    if (!matchElement) {
+      elements = toArray(querySelector(selector));
+    }
+
+    if (matchElement && matchElement.matches(selector)) {
+      elements = [matchElement];
+    }
+
+    elements.forEach(function (element) {
+      /* __vm_cb: whether the load callback has been called
+       * __vm_l: set by onload attribute, whether the element was loaded
+       * __vm_ev: whether the event listener was added or not
+       */
+      if (element.__vm_cb) {
+        return;
+      }
+
+      var onload = function onload() {
+        /* Mark that the callback for this element has already been called,
+         * this prevents the callback to run twice in some (rare) conditions
+         */
+        element.__vm_cb = true;
+        /* onload needs to be removed because we only need the
+         * attribute after ssr and if we dont remove it the node
+         * will fail isEqualNode on the client
+         */
+
+        removeAttribute(element, 'onload');
+        callback(element);
+      };
+      /* IE9 doesnt seem to load scripts synchronously,
+       * causing a script sometimes/often already to be loaded
+       * when we add the event listener below (thus adding an onload event
+       * listener has no use because it will never be triggered).
+       * Therefore we add the onload attribute during ssr, and
+       * check here if it was already loaded or not
+       */
+
+
+      if (element.__vm_l) {
+        onload();
+        return;
+      }
+
+      if (!element.__vm_ev) {
+        element.__vm_ev = true;
+        element.addEventListener('load', onload);
+      }
+    });
+  });
+}
+
+// instead of adding it to the html
+
+var attributeMap = {};
+/**
+ * Updates the document's html tag attributes
+ *
+ * @param  {Object} attrs - the new document html attributes
+ * @param  {HTMLElement} tag - the HTMLElement tag to update with new attrs
+ */
+
+function updateAttribute(appId, options, type, attrs, tag) {
+  var _ref = options || {},
+      attribute = _ref.attribute;
+
+  var vueMetaAttrString = tag.getAttribute(attribute);
+
+  if (vueMetaAttrString) {
+    attributeMap[type] = JSON.parse(decodeURI(vueMetaAttrString));
+    removeAttribute(tag, attribute);
+  }
+
+  var data = attributeMap[type] || {};
+  var toUpdate = []; // remove attributes from the map
+  // which have been removed for this appId
+
+  for (var attr in data) {
+    if (data[attr] !== undefined && appId in data[attr]) {
+      toUpdate.push(attr);
+
+      if (!attrs[attr]) {
+        delete data[attr][appId];
+      }
+    }
+  }
+
+  for (var _attr in attrs) {
+    var attrData = data[_attr];
+
+    if (!attrData || attrData[appId] !== attrs[_attr]) {
+      toUpdate.push(_attr);
+
+      if (attrs[_attr] !== undefined) {
+        data[_attr] = data[_attr] || {};
+        data[_attr][appId] = attrs[_attr];
+      }
+    }
+  }
+
+  for (var _i = 0, _toUpdate = toUpdate; _i < _toUpdate.length; _i++) {
+    var _attr2 = _toUpdate[_i];
+    var _attrData = data[_attr2];
+    var attrValues = [];
+
+    for (var _appId in _attrData) {
+      Array.prototype.push.apply(attrValues, [].concat(_attrData[_appId]));
+    }
+
+    if (attrValues.length) {
+      var attrValue = includes(booleanHtmlAttributes, _attr2) && attrValues.some(Boolean) ? '' : attrValues.filter(function (v) {
+        return v !== undefined;
+      }).join(' ');
+      tag.setAttribute(_attr2, attrValue);
+    } else {
+      removeAttribute(tag, _attr2);
+    }
+  }
+
+  attributeMap[type] = data;
+}
+
+/**
+ * Updates the document title
+ *
+ * @param  {String} title - the new title of the document
+ */
+function updateTitle(title) {
+  if (!title && title !== '') {
+    return;
+  }
+
+  document.title = title;
+}
+
+/**
+ * Updates meta tags inside <head> and <body> on the client. Borrowed from `react-helmet`:
+ * https://github.com/nfl/react-helmet/blob/004d448f8de5f823d10f838b02317521180f34da/src/Helmet.js#L195-L245
+ *
+ * @param  {('meta'|'base'|'link'|'style'|'script'|'noscript')} type - the name of the tag
+ * @param  {(Array<Object>|Object)} tags - an array of tag objects or a single object in case of base
+ * @return {Object} - a representation of what tags changed
+ */
+
+function updateTag(appId, options, type, tags, head, body) {
+  var _ref = options || {},
+      attribute = _ref.attribute,
+      tagIDKeyName = _ref.tagIDKeyName;
+
+  var dataAttributes = commonDataAttributes.slice();
+  dataAttributes.push(tagIDKeyName);
+  var newElements = [];
+  var queryOptions = {
+    appId: appId,
+    attribute: attribute,
+    type: type,
+    tagIDKeyName: tagIDKeyName
+  };
+  var currentElements = {
+    head: queryElements(head, queryOptions),
+    pbody: queryElements(body, queryOptions, {
+      pbody: true
+    }),
+    body: queryElements(body, queryOptions, {
+      body: true
+    })
+  };
+
+  if (tags.length > 1) {
+    // remove duplicates that could have been found by merging tags
+    // which include a mixin with metaInfo and that mixin is used
+    // by multiple components on the same page
+    var found = [];
+    tags = tags.filter(function (x) {
+      var k = JSON.stringify(x);
+      var res = !includes(found, k);
+      found.push(k);
+      return res;
+    });
+  }
+
+  tags.forEach(function (tag) {
+    if (tag.skip) {
+      return;
+    }
+
+    var newElement = document.createElement(type);
+
+    if (!tag.once) {
+      newElement.setAttribute(attribute, appId);
+    }
+
+    Object.keys(tag).forEach(function (attr) {
+      /* istanbul ignore next */
+      if (includes(tagProperties, attr)) {
+        return;
+      }
+
+      if (attr === 'innerHTML') {
+        newElement.innerHTML = tag.innerHTML;
+        return;
+      }
+
+      if (attr === 'json') {
+        newElement.innerHTML = JSON.stringify(tag.json);
+        return;
+      }
+
+      if (attr === 'cssText') {
+        if (newElement.styleSheet) {
+          /* istanbul ignore next */
+          newElement.styleSheet.cssText = tag.cssText;
+        } else {
+          newElement.appendChild(document.createTextNode(tag.cssText));
+        }
+
+        return;
+      }
+
+      if (attr === 'callback') {
+        newElement.onload = function () {
+          return tag[attr](newElement);
+        };
+
+        return;
+      }
+
+      var _attr = includes(dataAttributes, attr) ? "data-".concat(attr) : attr;
+
+      var isBooleanAttribute = includes(booleanHtmlAttributes, attr);
+
+      if (isBooleanAttribute && !tag[attr]) {
+        return;
+      }
+
+      var value = isBooleanAttribute ? '' : tag[attr];
+      newElement.setAttribute(_attr, value);
+    });
+    var oldElements = currentElements[getElementsKey(tag)]; // Remove a duplicate tag from domTagstoRemove, so it isn't cleared.
+
+    var indexToDelete;
+    var hasEqualElement = oldElements.some(function (existingTag, index) {
+      indexToDelete = index;
+      return newElement.isEqualNode(existingTag);
+    });
+
+    if (hasEqualElement && (indexToDelete || indexToDelete === 0)) {
+      oldElements.splice(indexToDelete, 1);
+    } else {
+      newElements.push(newElement);
+    }
+  });
+  var oldElements = [];
+
+  for (var _type in currentElements) {
+    Array.prototype.push.apply(oldElements, currentElements[_type]);
+  } // remove old elements
+
+
+  oldElements.forEach(function (element) {
+    element.parentNode.removeChild(element);
+  }); // insert new elements
+
+  newElements.forEach(function (element) {
+    if (element.hasAttribute('data-body')) {
+      body.appendChild(element);
+      return;
+    }
+
+    if (element.hasAttribute('data-pbody')) {
+      body.insertBefore(element, body.firstChild);
+      return;
+    }
+
+    head.appendChild(element);
+  });
+  return {
+    oldTags: oldElements,
+    newTags: newElements
+  };
+}
+
+/**
+ * Performs client-side updates when new meta info is received
+ *
+ * @param  {Object} newInfo - the meta info to update to
+ */
+
+function updateClientMetaInfo(appId, options, newInfo) {
+  options = options || {};
+  var _options = options,
+      ssrAttribute = _options.ssrAttribute,
+      ssrAppId = _options.ssrAppId; // only cache tags for current update
+
+  var tags = {};
+  var htmlTag = getTag(tags, 'html'); // if this is a server render, then dont update
+
+  if (appId === ssrAppId && htmlTag.hasAttribute(ssrAttribute)) {
+    // remove the server render attribute so we can update on (next) changes
+    removeAttribute(htmlTag, ssrAttribute); // add load callbacks if the
+
+    var addLoadListeners = false;
+    tagsSupportingOnload.forEach(function (type) {
+      if (newInfo[type] && addCallbacks(options, type, newInfo[type])) {
+        addLoadListeners = true;
+      }
+    });
+
+    if (addLoadListeners) {
+      addListeners();
+    }
+
+    return false;
+  } // initialize tracked changes
+
+
+  var tagsAdded = {};
+  var tagsRemoved = {};
+
+  for (var type in newInfo) {
+    // ignore these
+    if (includes(metaInfoOptionKeys, type)) {
+      continue;
+    }
+
+    if (type === 'title') {
+      // update the title
+      updateTitle(newInfo.title);
+      continue;
+    }
+
+    if (includes(metaInfoAttributeKeys, type)) {
+      var tagName = type.substr(0, 4);
+      updateAttribute(appId, options, type, newInfo[type], getTag(tags, tagName));
+      continue;
+    } // tags should always be an array, ignore if it isnt
+
+
+    if (!isArray(newInfo[type])) {
+      continue;
+    }
+
+    var _updateTag = updateTag(appId, options, type, newInfo[type], getTag(tags, 'head'), getTag(tags, 'body')),
+        oldTags = _updateTag.oldTags,
+        newTags = _updateTag.newTags;
+
+    if (newTags.length) {
+      tagsAdded[type] = newTags;
+      tagsRemoved[type] = oldTags;
+    }
+  }
+
+  return {
+    tagsAdded: tagsAdded,
+    tagsRemoved: tagsRemoved
+  };
+}
+
+var appsMetaInfo;
+function addApp(rootVm, appId, options) {
+  return {
+    set: function set(metaInfo) {
+      return setMetaInfo(rootVm, appId, options, metaInfo);
+    },
+    remove: function remove() {
+      return removeMetaInfo(rootVm, appId, options);
+    }
+  };
+}
+function setMetaInfo(rootVm, appId, options, metaInfo) {
+  // if a vm exists _and_ its mounted then immediately update
+  if (rootVm && rootVm.$el) {
+    return updateClientMetaInfo(appId, options, metaInfo);
+  } // store for later, the info
+  // will be set on the first refresh
+
+
+  appsMetaInfo = appsMetaInfo || {};
+  appsMetaInfo[appId] = metaInfo;
+}
+function removeMetaInfo(rootVm, appId, options) {
+  if (rootVm && rootVm.$el) {
+    var tags = {};
+
+    var _iterator = _createForOfIteratorHelper(metaInfoAttributeKeys),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var type = _step.value;
+        var tagName = type.substr(0, 4);
+        updateAttribute(appId, options, type, {}, getTag(tags, tagName));
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    return removeElementsByAppId(options, appId);
+  }
+
+  if (appsMetaInfo[appId]) {
+    delete appsMetaInfo[appId];
+    clearAppsMetaInfo();
+  }
+}
+function getAppsMetaInfo() {
+  return appsMetaInfo;
+}
+function clearAppsMetaInfo(force) {
+  if (force || !Object.keys(appsMetaInfo).length) {
+    appsMetaInfo = undefined;
+  }
+}
+
+/**
+ * Returns the correct meta info for the given component
+ * (child components will overwrite parent meta info)
+ *
+ * @param  {Object} component - the Vue instance to get meta info from
+ * @return {Object} - returned meta info
+ */
+
+function getMetaInfo(options, info, escapeSequences, component) {
+  options = options || {};
+  escapeSequences = escapeSequences || [];
+  var _options = options,
+      tagIDKeyName = _options.tagIDKeyName; // Remove all "template" tags from meta
+  // backup the title chunk in case user wants access to it
+
+  if (info.title) {
+    info.titleChunk = info.title;
+  } // replace title with populated template
+
+
+  if (info.titleTemplate && info.titleTemplate !== '%s') {
+    applyTemplate({
+      component: component,
+      contentKeyName: 'title'
+    }, info, info.titleTemplate, info.titleChunk || '');
+  } // convert base tag to an array so it can be handled the same way
+  // as the other tags
+
+
+  if (info.base) {
+    info.base = Object.keys(info.base).length ? [info.base] : [];
+  }
+
+  if (info.meta) {
+    // remove meta items with duplicate vmid's
+    info.meta = info.meta.filter(function (metaItem, index, arr) {
+      var hasVmid = !!metaItem[tagIDKeyName];
+
+      if (!hasVmid) {
+        return true;
+      }
+
+      var isFirstItemForVmid = index === findIndex(arr, function (item) {
+        return item[tagIDKeyName] === metaItem[tagIDKeyName];
+      });
+      return isFirstItemForVmid;
+    }); // apply templates if needed
+
+    info.meta.forEach(function (metaObject) {
+      return applyTemplate(options, metaObject);
+    });
+  }
+
+  return escapeMetaInfo(options, info, escapeSequences);
+}
+
+/**
+ * When called, will update the current meta info with new meta info.
+ * Useful when updating meta info as the result of an asynchronous
+ * action that resolves after the initial render takes place.
+ *
+ * Credit to [Sébastien Chopin](https://github.com/Atinux) for the suggestion
+ * to implement this method.
+ *
+ * @return {Object} - new meta info
+ */
+
+function refresh(rootVm, options) {
+  options = options || {}; // make sure vue-meta was initiated
+
+  if (!rootVm[rootConfigKey]) {
+    showWarningNotSupported();
+    return {};
+  } // collect & aggregate all metaInfo $options
+
+
+  var rawInfo = getComponentMetaInfo(options, rootVm);
+  var metaInfo = getMetaInfo(options, rawInfo, clientSequences, rootVm);
+  var appId = rootVm[rootConfigKey].appId;
+  var tags = updateClientMetaInfo(appId, options, metaInfo); // emit "event" with new info
+
+  if (tags && isFunction(metaInfo.changed)) {
+    metaInfo.changed(metaInfo, tags.tagsAdded, tags.tagsRemoved);
+    tags = {
+      addedTags: tags.tagsAdded,
+      removedTags: tags.tagsRemoved
+    };
+  }
+
+  var appsMetaInfo = getAppsMetaInfo();
+
+  if (appsMetaInfo) {
+    for (var additionalAppId in appsMetaInfo) {
+      updateClientMetaInfo(additionalAppId, options, appsMetaInfo[additionalAppId]);
+      delete appsMetaInfo[additionalAppId];
+    }
+
+    clearAppsMetaInfo(true);
+  }
+
+  return {
+    vm: rootVm,
+    metaInfo: metaInfo,
+    // eslint-disable-line object-shorthand
+    tags: tags
+  };
+}
+
+/**
+ * Generates tag attributes for use on the server.
+ *
+ * @param  {('bodyAttrs'|'htmlAttrs'|'headAttrs')} type - the type of attributes to generate
+ * @param  {Object} data - the attributes to generate
+ * @return {Object} - the attribute generator
+ */
+
+function attributeGenerator(options, type, data, _ref) {
+  var addSsrAttribute = _ref.addSsrAttribute;
+
+  var _ref2 = options || {},
+      attribute = _ref2.attribute,
+      ssrAttribute = _ref2.ssrAttribute;
+
+  var attributeStr = '';
+
+  for (var attr in data) {
+    var attrData = data[attr];
+    var attrValues = [];
+
+    for (var appId in attrData) {
+      attrValues.push.apply(attrValues, _toConsumableArray([].concat(attrData[appId])));
+    }
+
+    if (attrValues.length) {
+      attributeStr += booleanHtmlAttributes.includes(attr) && attrValues.some(Boolean) ? "".concat(attr) : "".concat(attr, "=\"").concat(attrValues.join(' '), "\"");
+      attributeStr += ' ';
+    }
+  }
+
+  if (attributeStr) {
+    attributeStr += "".concat(attribute, "=\"").concat(encodeURI(JSON.stringify(data)), "\"");
+  }
+
+  if (type === 'htmlAttrs' && addSsrAttribute) {
+    return "".concat(ssrAttribute).concat(attributeStr ? ' ' : '').concat(attributeStr);
+  }
+
+  return attributeStr;
+}
+
+/**
+ * Generates title output for the server
+ *
+ * @param  {'title'} type - the string "title"
+ * @param  {String} data - the title text
+ * @return {Object} - the title generator
+ */
+function titleGenerator(options, type, data, generatorOptions) {
+  var _ref = generatorOptions || {},
+      ln = _ref.ln;
+
+  if (!data) {
+    return '';
+  }
+
+  return "<".concat(type, ">").concat(data, "</").concat(type, ">").concat(ln ? '\n' : '');
+}
+
+/**
+ * Generates meta, base, link, style, script, noscript tags for use on the server
+ *
+ * @param  {('meta'|'base'|'link'|'style'|'script'|'noscript')} the name of the tag
+ * @param  {(Array<Object>|Object)} tags - an array of tag objects or a single object in case of base
+ * @return {Object} - the tag generator
+ */
+
+function tagGenerator(options, type, tags, generatorOptions) {
+  var _ref = options || {},
+      ssrAppId = _ref.ssrAppId,
+      attribute = _ref.attribute,
+      tagIDKeyName = _ref.tagIDKeyName;
+
+  var _ref2 = generatorOptions || {},
+      appId = _ref2.appId,
+      _ref2$isSSR = _ref2.isSSR,
+      isSSR = _ref2$isSSR === void 0 ? true : _ref2$isSSR,
+      _ref2$body = _ref2.body,
+      body = _ref2$body === void 0 ? false : _ref2$body,
+      _ref2$pbody = _ref2.pbody,
+      pbody = _ref2$pbody === void 0 ? false : _ref2$pbody,
+      _ref2$ln = _ref2.ln,
+      ln = _ref2$ln === void 0 ? false : _ref2$ln;
+
+  var dataAttributes = [tagIDKeyName].concat(_toConsumableArray(commonDataAttributes));
+
+  if (!tags || !tags.length) {
+    return '';
+  } // build a string containing all tags of this type
+
+
+  return tags.reduce(function (tagsStr, tag) {
+    if (tag.skip) {
+      return tagsStr;
+    }
+
+    var tagKeys = Object.keys(tag);
+
+    if (tagKeys.length === 0) {
+      return tagsStr; // Bail on empty tag object
+    }
+
+    if (Boolean(tag.body) !== body || Boolean(tag.pbody) !== pbody) {
+      return tagsStr;
+    }
+
+    var attrs = tag.once ? '' : " ".concat(attribute, "=\"").concat(appId || (isSSR === false ? '1' : ssrAppId), "\""); // build a string containing all attributes of this tag
+
+    for (var attr in tag) {
+      // these attributes are treated as children on the tag
+      if (tagAttributeAsInnerContent.includes(attr) || tagProperties.includes(attr)) {
+        continue;
+      }
+
+      if (attr === 'callback') {
+        attrs += ' onload="this.__vm_l=1"';
+        continue;
+      } // these form the attribute list for this tag
+
+
+      var prefix = '';
+
+      if (dataAttributes.includes(attr)) {
+        prefix = 'data-';
+      }
+
+      var isBooleanAttr = !prefix && booleanHtmlAttributes.includes(attr);
+
+      if (isBooleanAttr && !tag[attr]) {
+        continue;
+      }
+
+      attrs += " ".concat(prefix).concat(attr) + (isBooleanAttr ? '' : "=\"".concat(tag[attr], "\""));
+    }
+
+    var json = '';
+
+    if (tag.json) {
+      json = JSON.stringify(tag.json);
+    } // grab child content from one of these attributes, if possible
+
+
+    var content = tag.innerHTML || tag.cssText || json; // generate tag exactly without any other redundant attribute
+    // these tags have no end tag
+
+    var hasEndTag = !tagsWithoutEndTag.includes(type); // these tag types will have content inserted
+
+    var hasContent = hasEndTag && tagsWithInnerContent.includes(type); // the final string for this specific tag
+
+    return "".concat(tagsStr, "<").concat(type).concat(attrs).concat(!hasContent && hasEndTag ? '/' : '', ">") + (hasContent ? "".concat(content, "</").concat(type, ">") : '') + (ln ? '\n' : '');
+  }, '');
+}
+
+/**
+ * Converts a meta info property to one that can be stringified on the server
+ *
+ * @param  {String} type - the type of data to convert
+ * @param  {(String|Object|Array<Object>)} data - the data value
+ * @return {Object} - the new injector
+ */
+
+function generateServerInjector(options, metaInfo, globalInjectOptions) {
+  var serverInjector = {
+    data: metaInfo,
+    extraData: undefined,
+    addInfo: function addInfo(appId, metaInfo) {
+      this.extraData = this.extraData || {};
+      this.extraData[appId] = metaInfo;
+    },
+    callInjectors: function callInjectors(opts) {
+      var m = this.injectors; // only call title for the head
+
+      return (opts.body || opts.pbody ? '' : m.title.text(opts)) + m.meta.text(opts) + m.base.text(opts) + m.link.text(opts) + m.style.text(opts) + m.script.text(opts) + m.noscript.text(opts);
+    },
+    injectors: {
+      head: function head(ln) {
+        return serverInjector.callInjectors(_objectSpread2(_objectSpread2({}, globalInjectOptions), {}, {
+          ln: ln
+        }));
+      },
+      bodyPrepend: function bodyPrepend(ln) {
+        return serverInjector.callInjectors(_objectSpread2(_objectSpread2({}, globalInjectOptions), {}, {
+          ln: ln,
+          pbody: true
+        }));
+      },
+      bodyAppend: function bodyAppend(ln) {
+        return serverInjector.callInjectors(_objectSpread2(_objectSpread2({}, globalInjectOptions), {}, {
+          ln: ln,
+          body: true
+        }));
+      }
+    }
+  };
+
+  var _loop = function _loop(type) {
+    if (metaInfoOptionKeys.includes(type)) {
+      return "continue";
+    }
+
+    serverInjector.injectors[type] = {
+      text: function text(injectOptions) {
+        var addSsrAttribute = injectOptions === true;
+        injectOptions = _objectSpread2(_objectSpread2({
+          addSsrAttribute: addSsrAttribute
+        }, globalInjectOptions), injectOptions);
+
+        if (type === 'title') {
+          return titleGenerator(options, type, serverInjector.data[type], injectOptions);
+        }
+
+        if (metaInfoAttributeKeys.includes(type)) {
+          var attributeData = {};
+          var data = serverInjector.data[type];
+
+          if (data) {
+            var appId = injectOptions.isSSR === false ? '1' : options.ssrAppId;
+
+            for (var attr in data) {
+              attributeData[attr] = _defineProperty({}, appId, data[attr]);
+            }
+          }
+
+          if (serverInjector.extraData) {
+            for (var _appId in serverInjector.extraData) {
+              var _data = serverInjector.extraData[_appId][type];
+
+              if (_data) {
+                for (var _attr in _data) {
+                  attributeData[_attr] = _objectSpread2(_objectSpread2({}, attributeData[_attr]), {}, _defineProperty({}, _appId, _data[_attr]));
+                }
+              }
+            }
+          }
+
+          return attributeGenerator(options, type, attributeData, injectOptions);
+        }
+
+        var str = tagGenerator(options, type, serverInjector.data[type], injectOptions);
+
+        if (serverInjector.extraData) {
+          for (var _appId2 in serverInjector.extraData) {
+            var _data2 = serverInjector.extraData[_appId2][type];
+            var extraStr = tagGenerator(options, type, _data2, _objectSpread2({
+              appId: _appId2
+            }, injectOptions));
+            str = "".concat(str).concat(extraStr);
+          }
+        }
+
+        return str;
+      }
+    };
+  };
+
+  for (var type in defaultInfo) {
+    var _ret = _loop(type);
+
+    if (_ret === "continue") continue;
+  }
+
+  return serverInjector;
+}
+
+/**
+ * Converts the state of the meta info object such that each item
+ * can be compiled to a tag string on the server
+ *
+ * @vm {Object} - Vue instance - ideally the root component
+ * @return {Object} - server meta info with `toString` methods
+ */
+
+function inject(rootVm, options, injectOptions) {
+  // make sure vue-meta was initiated
+  if (!rootVm[rootConfigKey]) {
+    showWarningNotSupported();
+    return {};
+  } // collect & aggregate all metaInfo $options
+
+
+  var rawInfo = getComponentMetaInfo(options, rootVm);
+  var metaInfo = getMetaInfo(options, rawInfo, serverSequences, rootVm); // generate server injector
+
+  var serverInjector = generateServerInjector(options, metaInfo, injectOptions); // add meta info from additional apps
+
+  var appsMetaInfo = getAppsMetaInfo();
+
+  if (appsMetaInfo) {
+    for (var additionalAppId in appsMetaInfo) {
+      serverInjector.addInfo(additionalAppId, appsMetaInfo[additionalAppId]);
+      delete appsMetaInfo[additionalAppId];
+    }
+
+    clearAppsMetaInfo(true);
+  }
+
+  return serverInjector.injectors;
+}
+
+function $meta(options) {
+  options = options || {};
+  /**
+   * Returns an injector for server-side rendering.
+   * @this {Object} - the Vue instance (a root component)
+   * @return {Object} - injector
+   */
+
+  var $root = this.$root;
+  return {
+    getOptions: function getOptions$1() {
+      return getOptions(options);
+    },
+    setOptions: function setOptions(newOptions) {
+      var refreshNavKey = 'refreshOnceOnNavigation';
+
+      if (newOptions && newOptions[refreshNavKey]) {
+        options.refreshOnceOnNavigation = !!newOptions[refreshNavKey];
+        addNavGuards($root);
+      }
+
+      var debounceWaitKey = 'debounceWait';
+
+      if (newOptions && debounceWaitKey in newOptions) {
+        var debounceWait = parseInt(newOptions[debounceWaitKey]);
+
+        if (!isNaN(debounceWait)) {
+          options.debounceWait = debounceWait;
+        }
+      }
+
+      var waitOnDestroyedKey = 'waitOnDestroyed';
+
+      if (newOptions && waitOnDestroyedKey in newOptions) {
+        options.waitOnDestroyed = !!newOptions[waitOnDestroyedKey];
+      }
+    },
+    refresh: function refresh$1() {
+      return refresh($root, options);
+    },
+    inject: function inject$1(injectOptions) {
+      return  inject($root, options, injectOptions) ;
+    },
+    pause: function pause$1() {
+      return pause($root);
+    },
+    resume: function resume$1() {
+      return resume($root);
+    },
+    addApp: function addApp$1(appId) {
+      return addApp($root, appId, options);
+    }
+  };
+}
+
+function generate(rawInfo, options) {
+  options = setOptions(options);
+  var metaInfo = getMetaInfo(options, rawInfo, serverSequences);
+  var serverInjector = generateServerInjector(options, metaInfo);
+  return serverInjector.injectors;
+}
+
+/**
+ * Plugin install function.
+ * @param {Function} Vue - the Vue constructor.
+ */
+
+function install(Vue, options) {
+  if (Vue.__vuemeta_installed) {
+    return;
+  }
+
+  Vue.__vuemeta_installed = true;
+  options = setOptions(options);
+
+  Vue.prototype.$meta = function () {
+    return $meta.call(this, options);
+  };
+
+  Vue.mixin(createMixin(Vue, options));
+}
+
+var index = {
+  version: version,
+  install: install,
+  generate: function generate$1(metaInfo, options) {
+    return  generate(metaInfo, options) ;
+  },
+  hasMetaInfo: hasMetaInfo
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (index);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-meta/node_modules/deepmerge/dist/cjs.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue-meta/node_modules/deepmerge/dist/cjs.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var isMergeableObject = function isMergeableObject(value) {
+	return isNonNullObject(value)
+		&& !isSpecial(value)
+};
+
+function isNonNullObject(value) {
+	return !!value && typeof value === 'object'
+}
+
+function isSpecial(value) {
+	var stringValue = Object.prototype.toString.call(value);
+
+	return stringValue === '[object RegExp]'
+		|| stringValue === '[object Date]'
+		|| isReactElement(value)
+}
+
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
+
+function isReactElement(value) {
+	return value.$$typeof === REACT_ELEMENT_TYPE
+}
+
+function emptyTarget(val) {
+	return Array.isArray(val) ? [] : {}
+}
+
+function cloneUnlessOtherwiseSpecified(value, options) {
+	return (options.clone !== false && options.isMergeableObject(value))
+		? deepmerge(emptyTarget(value), value, options)
+		: value
+}
+
+function defaultArrayMerge(target, source, options) {
+	return target.concat(source).map(function(element) {
+		return cloneUnlessOtherwiseSpecified(element, options)
+	})
+}
+
+function getMergeFunction(key, options) {
+	if (!options.customMerge) {
+		return deepmerge
+	}
+	var customMerge = options.customMerge(key);
+	return typeof customMerge === 'function' ? customMerge : deepmerge
+}
+
+function getEnumerableOwnPropertySymbols(target) {
+	return Object.getOwnPropertySymbols
+		? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+			return target.propertyIsEnumerable(symbol)
+		})
+		: []
+}
+
+function getKeys(target) {
+	return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target))
+}
+
+function propertyIsOnObject(object, property) {
+	try {
+		return property in object
+	} catch(_) {
+		return false
+	}
+}
+
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+	return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+		&& !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+			&& Object.propertyIsEnumerable.call(target, key)) // and also unsafe if they're nonenumerable.
+}
+
+function mergeObject(target, source, options) {
+	var destination = {};
+	if (options.isMergeableObject(target)) {
+		getKeys(target).forEach(function(key) {
+			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+		});
+	}
+	getKeys(source).forEach(function(key) {
+		if (propertyIsUnsafe(target, key)) {
+			return
+		}
+
+		if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
+			destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+		} else {
+			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+		}
+	});
+	return destination
+}
+
+function deepmerge(target, source, options) {
+	options = options || {};
+	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+	// cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+	// implementations can use it. The caller may not replace it.
+	options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+
+	var sourceIsArray = Array.isArray(source);
+	var targetIsArray = Array.isArray(target);
+	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+
+	if (!sourceAndTargetTypesMatch) {
+		return cloneUnlessOtherwiseSpecified(source, options)
+	} else if (sourceIsArray) {
+		return options.arrayMerge(target, source, options)
+	} else {
+		return mergeObject(target, source, options)
+	}
+}
+
+deepmerge.all = function deepmergeAll(array, options) {
+	if (!Array.isArray(array)) {
+		throw new Error('first argument should be an array')
+	}
+
+	return array.reduce(function(prev, next) {
+		return deepmerge(prev, next, options)
+	}, {})
+};
+
+var deepmerge_1 = deepmerge;
+
+module.exports = deepmerge_1;
 
 
 /***/ }),
@@ -36198,6 +40208,18 @@ webpackContext.id = "./resources/js/Pages sync recursive ^\\.\\/.*$";
 /******/ 	// It's empty as some runtime module handles the default behavior
 /******/ 	__webpack_require__.x = x => {}
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => module['default'] :
+/******/ 				() => module;
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports

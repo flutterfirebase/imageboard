@@ -59,8 +59,10 @@
             ResponsiveNavLink,
         },
 
-        data() {
-            return {}
+        meta() {
+            return {
+                titleTemplate: `%s - ${this.$page.props.appName}`
+            }
         },
     }
 </script>

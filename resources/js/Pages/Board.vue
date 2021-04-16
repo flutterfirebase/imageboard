@@ -37,5 +37,11 @@ export default {
         AppLayout,
         PostCreator,
     },
+
+    meta() {
+        return {
+            title: `/${this.board.url}/ - ${this.board.name}`
+        }
+    }
 }
 </script>

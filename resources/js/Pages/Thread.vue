@@ -34,5 +34,18 @@ export default {
         PostCreator,
         Post,
     },
+
+    meta() {
+        const threadTitle = this.thread.subject || this.thread.content.split(' ').slice(0, 5).join(' ');
+        return {
+            title: `/${this.board.url}/ - ${threadTitle} - ${this.board.name}`
+        };
+    },
+
+    data() {
+        return {
+            showPostCreator: true,
+        };
+    }
 }
 </script>
